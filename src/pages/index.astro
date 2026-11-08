@@ -2,20 +2,33 @@
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero/Hero.jsx';
+import Stats from '../components/Stats/Stats.jsx';
+import Methods from '../components/Methods/Methods.jsx';
+import Units from '../components/Units/Units.jsx';
 import NewsSection from '../components/NewsSection/NewsSection.jsx';
-import { getPage, getLatestPosts } from '../lib/wordpress.js';
+import Admission from '../components/Admission/Admission.jsx';
+import { getPage, getLatestPosts, getImageField } from '../lib/wordpress.js';
+import * as home from '../data/home.js';
 
-// Pobieranie danych (Hero + Aktualności)
+// Strona główna w WP - z niej bierzemy pola ACF (zdjęcia i teksty Hero).
 const pageData = await getPage('strona-glowna');
-const pageTitle = pageData?.title || 'Witaj na stronie!';
-const pageContent = pageData?.contentHtml || '<p>Brak treści z WP.</p>';
+const fields = pageData?.fields ?? {};
+
+// Hero: pola ACF hero_title / hero_text / hero_image, a gdy są puste - teksty z src/data/home.js.
+const heroImage = await getImageField(fields.hero_image, '2048x2048');
+const heroTitle = fields.hero_title || home.hero.title;
+const heroText = fields.hero_text || home.hero.text;
 
 const latestPosts = await getLatestPosts(3);
----
-<Layout title={pageTitle}>
-    {/* Sekcja Aktualności */}
-    <NewsSection posts={latestPosts} />
 
-    {/* Sekcja Hero */}
-    <Hero title={pageTitle} content={pageContent} />
+// Tło sekcji Aktualności: pole ACF "Tło aktualności" (news_background).
+const newsBackground = await getImageField(fields.news_background, '2048x2048');
+---
+<Layout title="Salezjański Dom Młodzieżowy w Różanymstoku">
+    <Hero eyebrow={home.hero.eyebrow} title={heroTitle} text={heroText} image={heroImage} />
+    <Stats items={home.stats} />
+    <Methods methods={home.methods} activities={home.activities} />
+    <Units units={home.units} />
+    <NewsSection posts={latestPosts} backgroundImage={newsBackground} />
+    <Admission {...home.admission} />
 </Layout>
