@@ -3,7 +3,8 @@
 // Wspólny szkielet wszystkich stron: <head>, Navbar i <main>.
 // Użycie na stronie:
 //   <Layout title="Tytuł w karcie przeglądarki">...treść strony...</Layout>
-import Navbar from '../components/Navbar.jsx';
+import Navbar from '../components/Navbar/Navbar.jsx';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -28,10 +29,3 @@ const { title } = Astro.props;
     </main>
   </body>
 </html>
-
-<style is:global>
-  body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-  }
-</style>

@@ -1,7 +1,7 @@
 ---
 // src/pages/news.astro - lista wszystkich aktualności
 import Layout from '../layouts/Layout.astro';
-import NewsSection from '../components/NewsSection.jsx';
+import NewsSection from '../components/NewsSection/NewsSection.jsx';
 import { getAllPosts } from '../lib/wordpress.js';
 
 const posts = await getAllPosts();

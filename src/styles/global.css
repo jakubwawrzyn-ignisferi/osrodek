@@ -1,0 +1,36 @@
+/* src/styles/global.css
+ * Style wspólne dla całej strony. Ładowane raz, w src/layouts/Layout.astro.
+ * Kolory są zapisane jako zmienne, żeby przy zmianie wyglądu poprawiać je w jednym miejscu.
+ * Style poszczególnych komponentów są w plikach *.module.css obok komponentów.
+ */
+
+:root {
+  /* Tekst */
+  --color-heading: #111827;
+  --color-text: #374151;
+  --color-text-muted: #4b5563;
+  --color-text-subtle: #6b7280;
+
+  /* Tła i obramowania */
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f4f4f5;
+  --color-bg-dark: #111827;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #d1d5db;
+  --color-border: #e5e7eb;
+
+  /* Akcenty */
+  --color-link: #2563eb;
+
+  /* Układ */
+  --content-width: 1200px;
+  --reading-width: 800px;
+
+  --font-sans: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+}
