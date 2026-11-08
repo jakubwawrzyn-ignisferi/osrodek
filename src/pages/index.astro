@@ -1,11 +1,12 @@
 ---
 // src/pages/index.astro
+import Navbar from '../components/Navbar.jsx';
 import Hero from '../components/Hero.jsx';
 import NewsSection from '../components/NewsSection.jsx';
 
 const WP_URL = 'http://osrodek.local';
 
-// 1. Pobieramy treść dla sekcji Hero (Strona Główna)
+// Pobieranie danych (Hero + Aktualności)
 const pageRes = await fetch(`${WP_URL}/wp-json/wp/v2/pages?slug=strona-glowna`);
 const pages = await pageRes.json();
 const pageData = pages[0];
@@ -13,7 +14,6 @@ const pageData = pages[0];
 const pageTitle = pageData ? pageData.title.rendered : 'Witaj na stronie!';
 const pageContent = pageData ? pageData.content.rendered : 'Brak treści z WP.';
 
-// 2. Pobieramy 3 najnowsze wpisy (z parametrem _embed dla obrazków)
 const postsRes = await fetch(`${WP_URL}/wp-json/wp/v2/posts?per_page=3&_embed`);
 const latestPosts = await postsRes.json();
 ---
@@ -26,11 +26,15 @@ const latestPosts = await postsRes.json();
     <title>{pageTitle}</title>
 </head>
 <body style="margin: 0; font-family: system-ui, sans-serif;">
+    
+    {/* 1. Navbar na samej górze */}
+    <Navbar />
+
     <main>
-        {/* Sekcja Aktualności pod miejscem na przyszły Navbar */}
+        {/* 2. Sekcja Aktualności */}
         <NewsSection posts={latestPosts} />
 
-        {/* Sekcja Hero poniżej */}
+        {/* 3. Sekcja Hero */}
         <Hero title={pageTitle} content={pageContent} />
     </main>
 </body>
