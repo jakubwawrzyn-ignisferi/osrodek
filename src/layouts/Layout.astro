@@ -1,31 +1,65 @@
 ---
 // src/layouts/Layout.astro
-// Wspólny szkielet wszystkich stron: <head>, Navbar i <main>.
+// Wspólny szkielet wszystkich stron: <head>, Navbar, <main>, pasek pomocy i stopka.
 // Użycie na stronie:
 //   <Layout title="Tytuł w karcie przeglądarki">...treść strony...</Layout>
 import Navbar from '../components/Navbar/Navbar.jsx';
+import HelpBar from '../components/HelpBar/HelpBar.jsx';
+import Footer from '../components/Footer/Footer.jsx';
+
+// Czcionki dołączone do projektu (bez łączenia z serwerami Google).
+// Tylko alfabet łaciński: "latin" + "latin-ext" (polskie znaki).
+import '@fontsource/prompt/latin-500.css';
+import '@fontsource/prompt/latin-ext-500.css';
+import '@fontsource/prompt/latin-600.css';
+import '@fontsource/prompt/latin-ext-600.css';
+import '@fontsource/noto-sans/latin-400.css';
+import '@fontsource/noto-sans/latin-ext-400.css';
+import '@fontsource/noto-sans/latin-400-italic.css';
+import '@fontsource/noto-sans/latin-ext-400-italic.css';
+import '@fontsource/noto-sans/latin-600.css';
+import '@fontsource/noto-sans/latin-ext-600.css';
+import '@fontsource/noto-sans/latin-700.css';
+import '@fontsource/noto-sans/latin-ext-700.css';
+
 import '../styles/global.css';
+import '../styles/wp-content.css';
 
 interface Props {
   title: string;
+  // Krótki opis strony dla wyszukiwarek
+  description?: string;
+  // false = bez paska "Potrzebujesz pomocy?" (np. na stronie, która sama pokazuje telefony pomocowe)
+  showHelpBar?: boolean;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = 'Salezjański Dom Młodzieżowy w Różanymstoku: Młodzieżowy Ośrodek Socjoterapii, Salezjański Ośrodek Wychowawczy, szkoły i bursa.',
+  showHelpBar = true,
+} = Astro.props;
+
+const siteName = 'Salezjański Dom Młodzieżowy w Różanymstoku';
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 ---
 <!doctype html>
 <html lang="pl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#1e3354" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
   </head>
   <body>
-    <Navbar />
+    <Navbar client:media="(max-width: 960px)" currentPath={Astro.url.pathname} />
     <main>
       <slot />
     </main>
+    {showHelpBar && <HelpBar />}
+    <Footer />
   </body>
 </html>

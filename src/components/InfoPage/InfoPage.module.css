@@ -1,0 +1,19 @@
+.page {
+  max-width: var(--reading-width);
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.title {
+  margin: 0 0 2rem;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: var(--color-heading);
+}
+
+.pending {
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+}

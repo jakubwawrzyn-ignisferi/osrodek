@@ -1,0 +1,114 @@
+.footer {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-on-dark-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Kolumny: na szerokim ekranie 4 obok siebie, na telefonie jedna pod drugą */
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 3.5rem 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 2.5rem 3rem;
+}
+
+/* Logo na białym kafelku (jak w salezjańskiej identyfikacji) */
+.logoTile {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 1.25rem;
+  border-radius: var(--radius-md);
+  background-color: #fff;
+}
+
+.logoTile img {
+  display: block;
+  width: 46px;
+  height: auto;
+}
+
+.name {
+  font-family: var(--font-heading);
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text-on-dark);
+}
+
+.patron {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-on-dark-muted);
+}
+
+.address {
+  font-style: normal;
+}
+
+.heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-on-dark);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list li + li {
+  margin-top: 0.35rem;
+}
+
+.link {
+  color: var(--color-text-on-dark-muted);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--color-text-on-dark);
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Pasek z prawami autorskimi */
+.bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.25rem 2rem;
+}
+
+.copyright {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  font-size: 0.85rem;
+  color: var(--color-text-on-dark-subtle);
+}
+
+/* Tekst tylko dla czytników ekranu */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

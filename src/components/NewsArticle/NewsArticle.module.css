@@ -30,13 +30,7 @@
   margin: 2rem 0;
 }
 
-/* Treść wpisu z WordPressa */
-.content {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--color-text);
-}
-
+/* Treść wpisu z WordPressa: wygląd w src/styles/wp-content.css */
 .contentNoImage {
   margin-top: 2rem;
 }

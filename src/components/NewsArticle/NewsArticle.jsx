@@ -19,7 +19,7 @@ export default function NewsArticle({ title, date, dateIso, image, contentHtml }
 
       {/* Treść wpisu z WordPressa */}
       <div
-        className={image ? styles.content : `${styles.content} ${styles.contentNoImage}`}
+        className={`wp-content ${image ? '' : styles.contentNoImage}`}
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
     </article>
