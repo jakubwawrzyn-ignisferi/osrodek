@@ -1,0 +1,129 @@
+.section {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--section-space) 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Karta adresu wyróżniona czerwienią z logo */
+.addressCard {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.addressCard .cardTitle {
+  color: #fff;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.tag {
+  margin-bottom: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.cardTitle {
+  margin: 0 0 1.25rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.address {
+  margin: 0 0 1.75rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.addressCard :global(.btn) {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.listIcon {
+  color: var(--color-accent);
+}
+
+.label {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.value {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.value:hover {
+  color: var(--color-accent);
+}
+
+.social {
+  margin-top: auto;
+  font-weight: 600;
+  color: var(--color-link);
+}
+
+@media (max-width: 420px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  /* E-mail pod etykietą, żeby nie rozpychał wiersza */
+  .list li {
+    grid-template-columns: 22px 1fr;
+  }
+
+  .value {
+    grid-column: 2;
+    text-align: left;
+  }
+}

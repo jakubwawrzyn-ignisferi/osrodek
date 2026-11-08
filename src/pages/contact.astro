@@ -1,17 +1,15 @@
 ---
 // src/pages/contact.astro
+// Dane kontaktowe pochodzą z src/data/site.js.
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader/PageHeader.jsx';
+import Contact from '../components/Contact/Contact.jsx';
 ---
-<Layout title="Kontakt">
-    <div class="placeholder">
-        <h1>Kontakt</h1>
-        <p>Tutaj wkrótce pojawi się formularz i dane kontaktowe z WordPressa.</p>
-    </div>
+<Layout title="Kontakt" description="Adres, telefony i e-maile Młodzieżowego Ośrodka Socjoterapii i Salezjańskiego Ośrodka Wychowawczego w Różanymstoku.">
+    <PageHeader
+        eyebrow="Kontakt"
+        title="Zadzwoń lub napisz"
+        lead="Chętnie odpowiemy na pytania rodziców, opiekunów i instytucji."
+    />
+    <Contact />
 </Layout>
-
-<style>
-    .placeholder {
-        padding: 4rem 2rem;
-        text-align: center;
-    }
-</style>

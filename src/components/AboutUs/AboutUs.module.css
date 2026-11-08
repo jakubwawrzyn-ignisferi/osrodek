@@ -1,61 +1,28 @@
-/* Baner główny */
-.banner {
-  background-color: var(--color-bg-dark);
-  color: var(--color-text-on-dark);
-  padding: 3rem 2rem;
-}
-
-.bannerInner {
-  max-width: var(--content-width);
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap; /* na telefonach obrazek zjeżdża pod tekst */
-  align-items: center;
-  justify-content: space-between;
-  gap: 3rem;
-}
-
-.bannerText {
-  flex: 1 1 500px;
-}
-
-.title {
-  font-size: 2.75rem;
-  font-weight: bold;
-  line-height: 1.2;
-  margin: 0 0 1.25rem 0;
-}
-
-.lead {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  margin: 0;
-  color: var(--color-text-on-dark-muted);
-}
-
-.bannerImageWrapper {
-  flex: 0 1 380px; /* maksymalna szerokość obrazka */
-  display: flex;
-  justify-content: center;
-}
-
-.bannerImage {
-  width: 100%;
-  max-height: 320px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-}
-
-/* Treść strony z WordPressa */
 .contentSection {
-  max-width: var(--reading-width);
-  margin: 4rem auto;
-  padding: 0 2rem;
+  padding: var(--section-space) 1.5rem;
 }
 
+/* Treść na białej "kartce" - wygodniejsza do czytania na ciepłym tle strony */
 .content {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--color-text);
+  max-width: var(--reading-width);
+  margin: 0 auto;
+  padding: clamp(1.75rem, 5vw, 3.5rem);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.content > :first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .contentSection {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .content {
+    border-radius: var(--radius-md);
+  }
 }

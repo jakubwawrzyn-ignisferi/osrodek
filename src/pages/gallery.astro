@@ -1,17 +1,28 @@
 ---
 // src/pages/gallery.astro
+// Galeria jest w przygotowaniu - zdjęcia trafią tu z WordPressa.
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader/PageHeader.jsx';
 ---
 <Layout title="Galeria">
+    <PageHeader
+        eyebrow="Galeria"
+        title="Życie w Różanymstoku"
+        lead="Stadnina, warsztaty, sport, wyjazdy i codzienność ośrodka."
+    />
     <div class="placeholder">
-        <h1>Galeria</h1>
-        <p>Tutaj wkrótce pojawi się galeria zdjęć z WordPressa.</p>
+        <p>Galeria zdjęć jest w przygotowaniu.</p>
     </div>
 </Layout>
 
 <style>
     .placeholder {
-        padding: 4rem 2rem;
+        max-width: var(--reading-width);
+        margin: var(--section-space) auto;
+        padding: 2rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--color-bg);
         text-align: center;
+        color: var(--color-text-muted);
     }
 </style>
