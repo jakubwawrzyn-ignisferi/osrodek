@@ -1,41 +1,21 @@
 ---
 // src/pages/index.astro
-import Navbar from '../components/Navbar.jsx';
+import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.jsx';
 import NewsSection from '../components/NewsSection.jsx';
-
-const WP_URL = 'http://osrodek.local';
+import { getPage, getLatestPosts } from '../lib/wordpress.js';
 
 // Pobieranie danych (Hero + Aktualności)
-const pageRes = await fetch(`${WP_URL}/wp-json/wp/v2/pages?slug=strona-glowna`);
-const pages = await pageRes.json();
-const pageData = pages[0];
+const pageData = await getPage('strona-glowna');
+const pageTitle = pageData?.title || 'Witaj na stronie!';
+const pageContent = pageData?.contentHtml || '<p>Brak treści z WP.</p>';
 
-const pageTitle = pageData ? pageData.title.rendered : 'Witaj na stronie!';
-const pageContent = pageData ? pageData.content.rendered : 'Brak treści z WP.';
-
-const postsRes = await fetch(`${WP_URL}/wp-json/wp/v2/posts?per_page=3&_embed`);
-const latestPosts = await postsRes.json();
+const latestPosts = await getLatestPosts(3);
 ---
+<Layout title={pageTitle}>
+    {/* Sekcja Aktualności */}
+    <NewsSection posts={latestPosts} />
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{pageTitle}</title>
-</head>
-<body style="margin: 0; font-family: system-ui, sans-serif;">
-    
-    {/* 1. Navbar na samej górze */}
-    <Navbar />
-
-    <main>
-        {/* 2. Sekcja Aktualności */}
-        <NewsSection posts={latestPosts} />
-
-        {/* 3. Sekcja Hero */}
-        <Hero title={pageTitle} content={pageContent} />
-    </main>
-</body>
-</html>
+    {/* Sekcja Hero */}
+    <Hero title={pageTitle} content={pageContent} />
+</Layout>

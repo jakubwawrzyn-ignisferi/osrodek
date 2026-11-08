@@ -1,41 +1,19 @@
 ---
-// src/pages/nasza-misja.astro
-import Navbar from '../components/Navbar.jsx';
+// src/pages/about-us.astro
+import Layout from '../layouts/Layout.astro';
 import MissionContent from '../components/AboutUs.jsx';
+import { getPage } from '../lib/wordpress.js';
 
-const WP_URL = 'http://osrodek.local';
-
-// Pobieramy stronę o slugu "nasza-misja" z parametrem _embed (dla obrazka wyróżniającego)
-const res = await fetch(`${WP_URL}/wp-json/wp/v2/pages?slug=nasza-misja&_embed`);
-const pages = await res.json();
-const pageData = pages[0];
-
-// Wyciągamy dane
-const title = pageData ? pageData.title.rendered : 'Nasza misja';
-const content = pageData ? pageData.content.rendered : '<p>Brak treści.</p>';
-
-// Pobieramy adres URL obrazka wyróżniającego (banera), jeśli autor go ustawił w WP
-const bannerUrl = pageData?._embedded?.['wp:featuredmedia']?.[0]?.source_url || null;
+// Strona WP o slugu "nasza-misja" (razem z obrazkiem wyróżniającym jako banerem)
+const pageData = await getPage('nasza-misja');
+const title = pageData?.title || 'Nasza misja';
+const content = pageData?.contentHtml || '<p>Brak treści.</p>';
+const bannerUrl = pageData?.image?.url || null;
 ---
-
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-</head>
-<body style="margin: 0; font-family: system-ui, sans-serif;">
-    
-    <Navbar />
-
-    <main>
-        <MissionContent 
-            title={title} 
-            bannerUrl={bannerUrl} 
-            contentHtml={content} 
-        />
-    </main>
-
-</body>
-</html>
+<Layout title={title}>
+    <MissionContent
+        title={title}
+        bannerUrl={bannerUrl}
+        contentHtml={content}
+    />
+</Layout>
