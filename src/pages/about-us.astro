@@ -1,18 +1,41 @@
 ---
-// Przykład dla src/pages/kontakt.astro
+// src/pages/nasza-misja.astro
 import Navbar from '../components/Navbar.jsx';
+import MissionContent from '../components/AboutUs.jsx';
+
+const WP_URL = 'http://osrodek.local';
+
+// Pobieramy stronę o slugu "nasza-misja" z parametrem _embed (dla obrazka wyróżniającego)
+const res = await fetch(`${WP_URL}/wp-json/wp/v2/pages?slug=nasza-misja&_embed`);
+const pages = await res.json();
+const pageData = pages[0];
+
+// Wyciągamy dane
+const title = pageData ? pageData.title.rendered : 'Nasza misja';
+const content = pageData ? pageData.content.rendered : '<p>Brak treści.</p>';
+
+// Pobieramy adres URL obrazka wyróżniającego (banera), jeśli autor go ustawił w WP
+const bannerUrl = pageData?._embedded?.['wp:featuredmedia']?.[0]?.source_url || null;
 ---
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Kontakt</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
 </head>
 <body style="margin: 0; font-family: system-ui, sans-serif;">
+    
     <Navbar />
-    <main style="padding: 4rem 2rem; text-align: center;">
-        <h1>Kontakt</h1>
-        <p>Tutaj wkrótce pojawi się formularz i dane kontaktowe z WordPressa.</p>
+
+    <main>
+        <MissionContent 
+            title={title} 
+            bannerUrl={bannerUrl} 
+            contentHtml={content} 
+        />
     </main>
+
 </body>
 </html>
