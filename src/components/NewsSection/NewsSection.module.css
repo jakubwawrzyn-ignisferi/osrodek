@@ -1,6 +1,5 @@
 .section {
-  padding: 4rem 2rem;
-  background-color: var(--color-bg);
+  padding: var(--section-space) 2rem;
 }
 
 .inner {
@@ -8,74 +7,73 @@
   margin: 0 auto;
 }
 
+/* Nagłówek sekcji: tytuł po lewej, link "Wszystkie aktualności" po prawej */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 2.25rem;
+}
+
 .heading {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 0;
 }
 
 .empty {
-  text-align: center;
   color: var(--color-text-muted);
 }
 
-/* Siatka kafelków */
+/* Siatka kafelków (wygląd samego kafelka: NewsCard.module.css) */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 1.75rem;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
+/* --- Wariant ze zdjęciem w tle (adres zdjęcia w zmiennej --section-bg) --- */
+.withBackground {
+  position: relative;
+  margin: 0 1.5rem;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  background-color: var(--color-primary); /* widoczne, zanim zdjęcie się wczyta */
+  background-image: var(--section-bg);
+  background-size: cover;
+  background-position: center;
 }
 
-.image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+/* Granatowa, półprzezroczysta warstwa na zdjęciu - żeby nagłówek i kafelki były czytelne */
+.withBackground::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(30, 51, 84, 0.72), rgba(30, 51, 84, 0.88));
 }
 
-.body {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: 1.5rem;
+/* Treść nad warstwą przyciemniającą */
+.withBackground .inner {
+  position: relative;
 }
 
-.title {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.excerpt {
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-}
-
-.readMore {
-  margin-top: auto;
-  color: var(--color-link);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.allLinkWrapper {
-  text-align: center;
-}
-
-.allLink {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background-color: var(--color-bg-dark);
+.withBackground .heading,
+.withBackground .empty {
   color: var(--color-text-on-dark);
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 500;
+}
+
+.withBackground .eyebrow {
+  color: var(--color-accent-soft);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .withBackground {
+    margin: 0 0.75rem;
+    border-radius: var(--radius-md);
+  }
 }

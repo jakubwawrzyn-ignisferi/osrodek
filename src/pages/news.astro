@@ -7,5 +7,5 @@ import { getAllPosts } from '../lib/wordpress.js';
 const posts = await getAllPosts();
 ---
 <Layout title="Aktualności">
-    <NewsSection posts={posts} showAllLink={false} />
+    <NewsSection posts={posts} showAllLink={false} isPageTitle />
 </Layout>

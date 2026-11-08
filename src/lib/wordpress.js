@@ -55,23 +55,48 @@ function plainTitle(rendered, fallback) {
   return text || fallback;
 }
 
-function featuredImage(item) {
+// Obrazek wyróżniający ustawiony w WP. `size` to nazwa rozmiaru wygenerowanego przez WP
+// (np. 'medium_large' ~768 px) - na kafelki nie ma sensu ściągać pełnej rozdzielczości.
+function featuredImage(item, size) {
   const media = item._embedded?.['wp:featuredmedia']?.[0];
   if (!media?.source_url) return null;
-  return { url: media.source_url, alt: media.alt_text || '' };
+  const sized = size && media.media_details?.sizes?.[size]?.source_url;
+  return { url: sized || media.source_url, alt: media.alt_text || '' };
+}
+
+// Pierwszy obraz z treści wpisu - zapasowo, gdy wpis nie ma obrazka wyróżniającego.
+function firstContentImage(html = '') {
+  const tag = html.match(/<img\b[^>]*>/i)?.[0];
+  const url = tag?.match(/\bsrc="([^"]+)"/i)?.[1];
+  if (!url) return null;
+  const alt = tag.match(/\balt="([^"]*)"/i)?.[1] || '';
+  return { url: decodeEntities(url), alt: decodeEntities(alt) };
+}
+
+// Zajawka jako czysty tekst. WP kończy skrócone zajawki znakiem "[…]" - zamieniamy go na "…".
+function plainExcerpt(rendered = '') {
+  return decodeEntities(rendered.replace(/<[^>]*>/g, ''))
+    .replace(/\s*\[…\]\s*$/, '…')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 // Zamienia surowy obiekt z WP na prosty obiekt używany przez komponenty.
 // Dzięki temu komponenty nie muszą znać struktury odpowiedzi WP.
 function normalizePost(post) {
+  const contentHtml = post.content?.rendered || '';
   return {
     id: post.id,
     slug: post.slug,
     date: post.date,
+    dateLabel: formatDate(post.date),
     title: plainTitle(post.title?.rendered, 'Bez tytułu'),
-    excerptHtml: post.excerpt?.rendered || '',
-    contentHtml: post.content?.rendered || '',
+    excerpt: plainExcerpt(post.excerpt?.rendered),
+    contentHtml,
+    // Obrazek wyróżniający - na górze strony wpisu.
     image: featuredImage(post),
+    // Obraz na kafelek: wyróżniający, a jeśli go nie ma - pierwszy obraz z treści.
+    cardImage: featuredImage(post, 'medium_large') || firstContentImage(contentHtml),
   };
 }
 
@@ -82,6 +107,9 @@ function normalizePage(page) {
     title: plainTitle(page.title?.rendered, ''),
     contentHtml: page.content?.rendered || '',
     image: featuredImage(page),
+    // Pola dodane wtyczką ACF (Advanced Custom Fields). Gdy strona nie ma żadnych pól,
+    // ACF zwraca pustą tablicę zamiast obiektu - wtedy podstawiamy pusty obiekt.
+    fields: page.acf && !Array.isArray(page.acf) ? page.acf : {},
   };
 }
 
@@ -90,6 +118,34 @@ export async function getPage(slug) {
   const result = await wpFetch(`/pages?slug=${encodeURIComponent(slug)}&_embed`);
   const page = result?.data?.[0];
   return page ? normalizePage(page) : null;
+}
+
+// Zamienia wartość pola obrazka z ACF na { url, alt }.
+// W zależności od ustawień pola ACF zwraca ID obrazka, obiekt albo sam adres URL,
+// więc obsługujemy wszystkie trzy warianty. `size` to preferowany rozmiar z WP
+// (np. '2048x2048'); jeśli go nie ma, bierzemy oryginał.
+export async function getImageField(value, size = 'large') {
+  if (!value) return null;
+
+  if (typeof value === 'string') {
+    return { url: value, alt: '' };
+  }
+
+  if (typeof value === 'number') {
+    const result = await wpFetch(`/media/${value}`);
+    const media = result?.data;
+    if (!media?.source_url) return null;
+    return {
+      url: media.media_details?.sizes?.[size]?.source_url || media.source_url,
+      alt: media.alt_text || '',
+    };
+  }
+
+  if (typeof value === 'object' && value.url) {
+    return { url: value.sizes?.[size] || value.url, alt: value.alt || '' };
+  }
+
+  return null;
 }
 
 // Najnowsze wpisy (domyślnie 3).
