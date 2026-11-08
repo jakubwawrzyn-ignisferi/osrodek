@@ -1,15 +1,21 @@
 ---
+// src/pages/index.astro
 import Hero from '../components/Hero.jsx';
+import NewsSection from '../components/NewsSection.jsx';
 
-// 1. Adres Twojego API z WordPressa (zamień na swój adres z LocalWP)
-const response = await fetch('http://osrodek.local/wp-json/wp/v2/pages?slug=strona-glowna');
-const pages = await response.json();
+const WP_URL = 'http://osrodek.local';
 
-// Pobieramy pierwszą znalezioną stronę
+// 1. Pobieramy treść dla sekcji Hero (Strona Główna)
+const pageRes = await fetch(`${WP_URL}/wp-json/wp/v2/pages?slug=strona-glowna`);
+const pages = await pageRes.json();
 const pageData = pages[0];
 
 const pageTitle = pageData ? pageData.title.rendered : 'Witaj na stronie!';
 const pageContent = pageData ? pageData.content.rendered : 'Brak treści z WP.';
+
+// 2. Pobieramy 3 najnowsze wpisy (z parametrem _embed dla obrazków)
+const postsRes = await fetch(`${WP_URL}/wp-json/wp/v2/posts?per_page=3&_embed`);
+const latestPosts = await postsRes.json();
 ---
 
 <!DOCTYPE html>
@@ -19,9 +25,12 @@ const pageContent = pageData ? pageData.content.rendered : 'Brak treści z WP.';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
 </head>
-<body>
+<body style="margin: 0; font-family: system-ui, sans-serif;">
     <main>
-        {/* Renderujemy nasz komponent Reactowy z danymi z WP */}
+        {/* Sekcja Aktualności pod miejscem na przyszły Navbar */}
+        <NewsSection posts={latestPosts} />
+
+        {/* Sekcja Hero poniżej */}
         <Hero title={pageTitle} content={pageContent} />
     </main>
 </body>
