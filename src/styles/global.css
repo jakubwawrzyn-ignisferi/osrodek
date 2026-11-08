@@ -1,36 +1,210 @@
 /* src/styles/global.css
  * Style wspólne dla całej strony. Ładowane raz, w src/layouts/Layout.astro.
- * Kolory są zapisane jako zmienne, żeby przy zmianie wyglądu poprawiać je w jednym miejscu.
+ * Kolory, czcionki i zaokrąglenia są zapisane jako zmienne - zmiana wyglądu w jednym miejscu.
  * Style poszczególnych komponentów są w plikach *.module.css obok komponentów.
+ *
+ * Kierunek wizualny: "ciepło salezjańskie" - czerwień z logo ośrodka, granat,
+ * ciepłe jasne tła, duże zaokrąglenia, prawdziwe zdjęcia.
  */
 
 :root {
+  /* Kolory marki (czerwień i róż wzięte z pliku logo) */
+  --color-accent: #dc1e46;        /* przyciski, akcenty */
+  --color-accent-hover: #b8163a;
+  --color-accent-soft: #fad2c3;   /* róż z logo - delikatne tła */
+  --color-primary: #1e3354;       /* granat - nagłówki, stopka, ciemne sekcje */
+  --color-primary-hover: #2a4570;
+  --color-gold: #f2b33d;          /* złoty z plakatu naboru - oszczędnie */
+
   /* Tekst */
-  --color-heading: #111827;
-  --color-text: #374151;
-  --color-text-muted: #4b5563;
+  --color-heading: #1e3354;
+  --color-text: #2e3440;
+  --color-text-muted: #545b68;
   --color-text-subtle: #6b7280;
+  --color-link: #b8163a;          /* ciemniejsza czerwień - czytelna na jasnym tle */
 
   /* Tła i obramowania */
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f4f4f5;
-  --color-bg-dark: #111827;
+  --color-page: #f6f3ee;          /* ciepła jasna szarość - tło strony */
+  --color-bg: #ffffff;            /* kafelki, karty */
+  --color-bg-subtle: #ede8e1;
+  --color-bg-dark: #1e3354;
   --color-text-on-dark: #ffffff;
-  --color-text-on-dark-muted: #d1d5db;
-  --color-border: #e5e7eb;
+  --color-text-on-dark-muted: #d6dce6;
+  --color-text-on-dark-subtle: #a9b4c6;
+  --color-border: #e4ddd3;
 
-  /* Akcenty */
-  --color-link: #2563eb;
+  /* Pasek i ramki z telefonami pomocowymi */
+  --color-help-bg: #fdf1dc;
+  --color-help-border: #f2d29a;
+
+  /* Kształty */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --shadow-card: 0 1px 2px rgba(30, 51, 84, 0.06), 0 8px 24px -12px rgba(30, 51, 84, 0.18);
+  --shadow-card-hover: 0 2px 4px rgba(30, 51, 84, 0.08), 0 20px 40px -16px rgba(30, 51, 84, 0.32);
 
   /* Układ */
   --content-width: 1200px;
-  --reading-width: 800px;
+  --reading-width: 780px;
+  --section-space: clamp(3.5rem, 7vw, 6rem);
 
-  --font-sans: system-ui, sans-serif;
+  /* Czcionki (pliki dołączone do projektu przez @fontsource - bez łączenia z Google) */
+  --font-heading: 'Prompt', system-ui, sans-serif;
+  --font-sans: 'Noto Sans', system-ui, sans-serif;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Stopka zawsze na dole okna, nawet gdy strona ma mało treści */
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
+  color: var(--color-text);
+  background-color: var(--color-page);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-heading);
+  line-height: 1.2;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Wyraźna ramka przy poruszaniu się klawiaturą */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* --- Przyciski (używane w wielu komponentach) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-dark {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-dark:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Obramowany - na ciemnym tle lub zdjęciu */
+.btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+.btn-light {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+.btn-light:hover {
+  background-color: var(--color-accent-soft);
+}
+
+/* --- Nagłówek sekcji: mały czerwony nadtytuł + duży tytuł --- */
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+}
+
+.section-lead {
+  max-width: 640px;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+}
+
+/* Tekst tylko dla czytników ekranu */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
