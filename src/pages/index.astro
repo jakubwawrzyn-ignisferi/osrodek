@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.jsx';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 1. Adres Twojego API z WordPressa (zamień na swój adres z LocalWP)
+const response = await fetch('http://osrodek.local/wp-json/wp/v2/pages?slug=strona-glowna');
+const pages = await response.json();
+
+// Pobieramy pierwszą znalezioną stronę
+const pageData = pages[0];
+
+const pageTitle = pageData ? pageData.title.rendered : 'Witaj na stronie!';
+const pageContent = pageData ? pageData.content.rendered : 'Brak treści z WP.';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+</head>
+<body>
+    <main>
+        {/* Renderujemy nasz komponent Reactowy z danymi z WP */}
+        <Hero title={pageTitle} content={pageContent} />
+    </main>
+</body>
+</html>
