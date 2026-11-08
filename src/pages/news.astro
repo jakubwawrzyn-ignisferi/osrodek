@@ -1,18 +1,11 @@
 ---
-// Przykład dla src/pages/kontakt.astro
-import Navbar from '../components/Navbar.jsx';
+// src/pages/news.astro - lista wszystkich aktualności
+import Layout from '../layouts/Layout.astro';
+import NewsSection from '../components/NewsSection.jsx';
+import { getAllPosts } from '../lib/wordpress.js';
+
+const posts = await getAllPosts();
 ---
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Kontakt</title>
-</head>
-<body style="margin: 0; font-family: system-ui, sans-serif;">
-    <Navbar />
-    <main style="padding: 4rem 2rem; text-align: center;">
-        <h1>Kontakt</h1>
-        <p>Tutaj wkrótce pojawi się formularz i dane kontaktowe z WordPressa.</p>
-    </main>
-</body>
-</html>
+<Layout title="Aktualności">
+    <NewsSection posts={posts} showAllLink={false} />
+</Layout>
