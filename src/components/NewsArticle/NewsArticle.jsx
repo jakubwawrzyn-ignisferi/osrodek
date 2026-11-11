@@ -1,11 +1,12 @@
 // src/components/NewsArticle/NewsArticle.jsx
-// Treść pojedynczej aktualności (strona /news/[slug]).
+// Treść pojedynczej aktualności (strona /news/[slug]): biała karta z tytułem, datą i treścią z WP.
+// Obrazek wyróżniający wpisu jest zdjęciem w nagłówku (Banner) nad kartą.
 import React from 'react';
 import styles from './NewsArticle.module.css';
 
-export default function NewsArticle({ title, date, dateIso, image, contentHtml }) {
+export default function NewsArticle({ title, date, dateIso, contentHtml }) {
   return (
-    <article className={styles.article}>
+    <article className={`content-card ${styles.article}`}>
       <a href="/news" className={styles.backLink}>
         &larr; Wszystkie aktualności
       </a>
@@ -15,13 +16,8 @@ export default function NewsArticle({ title, date, dateIso, image, contentHtml }
         {date}
       </time>
 
-      {image && <img src={image.url} alt={image.alt} className={styles.image} />}
-
-      {/* Treść wpisu z WordPressa */}
-      <div
-        className={`wp-content ${image ? '' : styles.contentNoImage}`}
-        dangerouslySetInnerHTML={{ __html: contentHtml }}
-      />
+      {/* Treść wpisu z WordPressa (wygląd w src/styles/wp-content.css) */}
+      <div className={`wp-content ${styles.content}`} dangerouslySetInnerHTML={{ __html: contentHtml }} />
     </article>
   );
 }

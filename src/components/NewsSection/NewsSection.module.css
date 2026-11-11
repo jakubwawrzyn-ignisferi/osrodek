@@ -1,79 +1,33 @@
 .section {
-  padding: var(--section-space) 2rem;
-}
-
-.inner {
   max-width: var(--content-width);
   margin: 0 auto;
+  padding: var(--section-space) clamp(1rem, 3vw, 2rem) 0;
 }
 
-/* Nagłówek sekcji: tytuł po lewej, link "Wszystkie aktualności" po prawej */
+/* Tytuł po lewej, przycisk "Wszystkie aktualności" po prawej */
 .header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem 2rem;
-  margin-bottom: 2.25rem;
+  margin-bottom: 1.75rem;
 }
 
 .heading {
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .empty {
+  text-align: center;
   color: var(--color-text-muted);
 }
 
-/* Siatka kafelków (wygląd samego kafelka: NewsCard.module.css) */
+/* Siatka kafelków (wygląd samego kafelka: NewsCard.module.css).
+   Kafelek ma najwyżej 420 px szerokości, żeby pojedynczy wpis nie rozciągał się na całą stronę. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: 1.75rem;
-}
-
-/* --- Wariant ze zdjęciem w tle (adres zdjęcia w zmiennej --section-bg) --- */
-.withBackground {
-  position: relative;
-  margin: 0 1.5rem;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background-color: var(--color-primary); /* widoczne, zanim zdjęcie się wczyta */
-  background-image: var(--section-bg);
-  background-size: cover;
-  background-position: center;
-}
-
-/* Granatowa, półprzezroczysta warstwa na zdjęciu - żeby nagłówek i kafelki były czytelne */
-.withBackground::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(30, 51, 84, 0.72), rgba(30, 51, 84, 0.88));
-}
-
-/* Treść nad warstwą przyciemniającą */
-.withBackground .inner {
-  position: relative;
-}
-
-.withBackground .heading,
-.withBackground .empty {
-  color: var(--color-text-on-dark);
-}
-
-.withBackground .eyebrow {
-  color: var(--color-accent-soft);
-}
-
-@media (max-width: 640px) {
-  .section {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  .withBackground {
-    margin: 0 0.75rem;
-    border-radius: var(--radius-md);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 420px));
+  justify-content: center;
+  gap: 1.25rem;
 }

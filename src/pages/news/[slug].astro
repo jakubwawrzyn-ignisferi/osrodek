@@ -2,6 +2,7 @@
 // src/pages/news/[slug].astro - pojedyncza aktualność, np. /news/nabor-2025-2026
 // Przy budowaniu strony powstaje osobny plik HTML dla każdego wpisu z WordPressa.
 import Layout from '../../layouts/Layout.astro';
+import Banner from '../../components/Banner/Banner.jsx';
 import NewsArticle from '../../components/NewsArticle/NewsArticle.jsx';
 import { getAllPosts, formatDate } from '../../lib/wordpress.js';
 
@@ -15,12 +16,12 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 ---
-<Layout title={post.title}>
+<Layout title={post.title} description={post.excerpt || undefined} image={post.image}>
+    <Banner as="p" titleTop="Aktualności" words={['Z życia ośrodka']} image={post.image} />
     <NewsArticle
         title={post.title}
         date={formatDate(post.date)}
         dateIso={post.date}
-        image={post.image}
         contentHtml={post.contentHtml}
     />
 </Layout>
