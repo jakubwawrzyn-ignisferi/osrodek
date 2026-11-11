@@ -1,26 +1,8 @@
-// src/data/home.js
-// Treść sekcji strony głównej. Fakty pochodzą ze starej strony rozanystok-salezjanie.pl
-// i z plakatu naboru. Elementy oznaczone "DO POTWIERDZENIA" warto sprawdzić z ośrodkiem.
-//
-// Tytuł, opis i zdjęcie w sekcji Hero można nadpisać w WordPressie polami ACF
-// strony głównej (hero_title, hero_text, hero_image) - patrz src/pages/index.astro.
+// src/data/content.js
+// Treści podstron O nas, System pracy i Rekrutacja. Fakty pochodzą ze starej strony
+// rozanystok-salezjanie.pl i z plakatu naboru.
 
-export const hero = {
-  eyebrow: 'Różanystok, Podlasie',
-  title: 'Miejsce, w którym młodzi ludzie odzyskują kierunek',
-  text:
-    'Salezjański Dom Młodzieżowy w Różanymstoku. Wychowanie, terapia i nauka zawodu w duchu systemu prewencyjnego św. Jana Bosko.',
-};
-
-// Liczby pod sekcją Hero. DO POTWIERDZENIA: aktualność liczb.
-export const stats = [
-  { value: '80', label: 'wychowanków znalazło u nas opiekę' },
-  { value: '50', label: 'miejsc w bursie dla młodzieży z całej Polski' },
-  { value: '2012', label: 'rok otwarcia Młodzieżowego Ośrodka Socjoterapii' },
-  { value: 'I miejsce', label: 'za program edukacyjno-wychowawczy (Goniądz 2015)' },
-];
-
-// "Jak pracujemy" - metody z plakatu naboru. `icon` to nazwa ikony z biblioteki lucide.
+// System pracy - metody z plakatu naboru. `icon` to nazwa ikony z biblioteki lucide.
 export const methods = [
   { icon: 'Users', title: 'Społeczność terapeutyczna' },
   { icon: 'HeartHandshake', title: 'System prewencyjny św. Jana Bosko' },

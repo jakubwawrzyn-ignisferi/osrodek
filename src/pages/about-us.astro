@@ -1,19 +1,24 @@
 ---
 // src/pages/about-us.astro
+// Treść: strona WP "nasza-misja" (obrazek wyróżniający = zdjęcie w nagłówku).
+// Pod treścią karty placówek z src/data/content.js.
 import Layout from '../layouts/Layout.astro';
-import AboutUs from '../components/AboutUs/AboutUs.jsx';
+import Banner from '../components/Banner/Banner.jsx';
+import Units from '../components/Units/Units.jsx';
 import { getPage } from '../lib/wordpress.js';
+import { units } from '../data/content.js';
 
-// Strona WP o slugu "nasza-misja" (razem z obrazkiem wyróżniającym jako banerem)
-const pageData = await getPage('nasza-misja');
-const title = pageData?.title || 'Nasza misja';
-const content = pageData?.contentHtml || '<p>Brak treści.</p>';
-const bannerUrl = pageData?.image?.url || null;
+const page = await getPage('nasza-misja');
+const title = page?.title || 'Nasza misja';
 ---
-<Layout title={title}>
-    <AboutUs
-        title={title}
-        bannerUrl={bannerUrl}
-        contentHtml={content}
-    />
+<Layout title="O nas" image={page?.image}>
+    <Banner titleTop="O nas" titleBottom={title} image={page?.image} />
+    <article class="content-card">
+        {page?.contentHtml ? (
+            <div class="wp-content" set:html={page.contentHtml} />
+        ) : (
+            <p class="pending">Treść tej strony jest w przygotowaniu.</p>
+        )}
+    </article>
+    <Units units={units} />
 </Layout>

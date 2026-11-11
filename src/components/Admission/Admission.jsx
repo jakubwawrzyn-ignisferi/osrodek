@@ -1,5 +1,5 @@
 // src/components/Admission/Admission.jsx
-// Sekcja "Nabór": trzy kroki przyjęcia i kontakt (granatowy blok z kołami w barwach logo).
+// Strona "Rekrutacja": trzy kroki przyjęcia i kontakt (zielony blok ze wschodzącym słońcem).
 import React from 'react';
 import { Mail, Phone } from 'lucide-react';
 import Icon from '../Icon/Icon.jsx';
@@ -22,10 +22,10 @@ export default function Admission({ title, text, steps = [] }) {
           </h2>
           <p className={styles.text}>{text}</p>
           <div className={styles.actions}>
-            <a href={telHref(mos.phones[0].number)} className="btn btn-primary">
+            <a href={telHref(mos.phones[0].number)} className="btn btn-secondary">
               <Phone size={18} aria-hidden="true" /> {mos.phones[0].number}
             </a>
-            <a href={`mailto:${mos.email}`} className="btn btn-outline-light">
+            <a href={`mailto:${mos.email}`} className={`btn ${styles.outline}`}>
               <Mail size={18} aria-hidden="true" /> Napisz do nas
             </a>
           </div>

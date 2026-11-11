@@ -1,0 +1,84 @@
+/* Kolor kafelka przychodzi w zmiennej --tile (np. var(--c-brown)) */
+.row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 72px;
+  overflow: hidden;
+  border: 2px solid var(--tile);
+  border-radius: var(--radius-md);
+  background-color: rgba(255, 253, 248, 0.96);
+  box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.45);
+  color: #23261f;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link:hover {
+  transform: translateX(4px);
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.55);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 76px;
+  background-color: var(--tile);
+  color: #fff;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  /* Jasna poświata - napis czytelny także tam, gdzie wchodzi na zdjęcie */
+  text-shadow: 0 0 4px #fffdf8, 0 0 8px #fffdf8, 0 0 12px #fffdf8;
+}
+
+/* Zdjęcie po prawej, płynnie wtapiające się w biały pasek */
+.image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 65%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 65%);
+}
+
+.chevron {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--tile) 85%, transparent));
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .icon {
+    width: 60px;
+  }
+
+  .label {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.98rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:hover {
+    transform: none;
+  }
+}

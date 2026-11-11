@@ -1,34 +1,30 @@
 // src/components/Units/Units.jsx
-// Sekcja "Nasze placówki": karty MOS, MOW i szkół.
+// Strona "O nas": karty placówek wchodzących w skład Domu Młodzieżowego.
 import React from 'react';
 import Icon from '../Icon/Icon.jsx';
 import styles from './Units.module.css';
 
+const colors = ['green', 'brown', 'navy', 'bordo'];
+
 export default function Units({ units = [] }) {
   return (
-    <section id="placowki" className={styles.section} aria-labelledby="units-title">
-      <div className={styles.inner}>
-        <p className="eyebrow">Nasze placówki</p>
-        <h2 id="units-title" className="section-title">
-          Salezjański Dom Młodzieżowy w&nbsp;Różanymstoku
-        </h2>
-        <p className="section-lead">
-          W jednym miejscu działają dwa ośrodki wychowawcze, szkoły i bursa.
-        </p>
+    <section className={styles.section} aria-labelledby="units-title">
+      <h2 id="units-title" className={`section-title ${styles.title}`}>
+        Nasze placówki
+      </h2>
 
-        <ul className={styles.grid}>
-          {units.map((unit) => (
-            <li key={unit.name} className={styles.card}>
-              <span className={styles.icon}>
-                <Icon name={unit.icon} size={28} />
-              </span>
-              <span className={styles.tag}>{unit.short}</span>
-              <h3 className={styles.name}>{unit.name}</h3>
-              <p className={styles.text}>{unit.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className={styles.grid}>
+        {units.map((unit, index) => (
+          <li key={unit.name} className={styles.card} style={{ '--tile': `var(--c-${colors[index % colors.length]})` }}>
+            <span className={styles.icon}>
+              <Icon name={unit.icon} size={28} />
+            </span>
+            <span className={styles.tag}>{unit.short}</span>
+            <h3 className={styles.name}>{unit.name}</h3>
+            <p className={styles.text}>{unit.text}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -47,12 +47,12 @@ export const helplines = [
   { label: 'Dziecięcy Telefon Zaufania Rzecznika Praw Dziecka', number: '800 12 12 12' },
 ];
 
-// Podstrony z informacjami wymaganymi przepisami - kolumna "Informacje" w stopce.
+// Podstrony z informacjami wymaganymi przepisami - kolumna "Informacje" w stopce i kafelki na /dokumenty.
 // `slug` to adres strony w WordPressie, z której pobierana jest treść.
 export const legalPages = [
-  { label: 'Standardy ochrony małoletnich', href: '/standardy-ochrony', slug: 'standardy-ochrony' },
-  { label: 'Polityka prywatności', href: '/polityka-prywatnosci', slug: 'polityka-prywatnosci' },
-  { label: 'Ochrona danych (RODO)', href: '/ochrona-danych', slug: 'ochrona-danych' },
+  { label: 'Standardy ochrony małoletnich', href: '/standardy-ochrony', slug: 'standardy-ochrony', icon: 'ShieldCheck', color: 'green' },
+  { label: 'Polityka prywatności', href: '/polityka-prywatnosci', slug: 'polityka-prywatnosci', icon: 'FileText', color: 'brown' },
+  { label: 'Ochrona danych (RODO)', href: '/ochrona-danych', slug: 'ochrona-danych', icon: 'FileText', color: 'navy' },
 ];
 
 // "728 887 570" -> "tel:+48728887570" (link, który na telefonie od razu dzwoni).

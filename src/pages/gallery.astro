@@ -1,28 +1,29 @@
 ---
 // src/pages/gallery.astro
-// Galeria jest w przygotowaniu - zdjęcia trafią tu z WordPressa.
+// Treść: strona WP "galeria". Zdjęcia najlepiej wstawiać blokiem "Galeria" z ustawieniem
+// "Link do: Plik multimedialny" - kliknięcie miniatury otworzy wtedy zdjęcie w pełnym rozmiarze.
+// Można dodać kilka galerii z nagłówkami (np. "Obóz 2026", "Jasełka").
+// UWAGA: zdjęcia z rozpoznawalnymi wychowankami tylko za zgodą na publikację wizerunku.
 import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/PageHeader/PageHeader.jsx';
+import Banner from '../components/Banner/Banner.jsx';
+import { getPage } from '../lib/wordpress.js';
+
+const page = await getPage('galeria');
 ---
-<Layout title="Galeria">
-    <PageHeader
-        eyebrow="Galeria"
-        title="Życie w Różanymstoku"
-        lead="Stadnina, warsztaty, sport, wyjazdy i codzienność ośrodka."
-    />
-    <div class="placeholder">
-        <p>Galeria zdjęć jest w przygotowaniu.</p>
+<Layout title="Galeria" image={page?.image}>
+    <Banner titleTop="Galeria" words={['Życie w Różanymstoku']} image={page?.image} />
+    <div class="content-card gallery">
+        {page?.contentHtml ? (
+            <div class="wp-content" set:html={page.contentHtml} />
+        ) : (
+            <p class="pending">Galeria zdjęć jest w przygotowaniu.</p>
+        )}
     </div>
 </Layout>
 
 <style>
-    .placeholder {
-        max-width: var(--reading-width);
-        margin: var(--section-space) auto;
-        padding: 2rem;
-        border-radius: var(--radius-lg);
-        background-color: var(--color-bg);
-        text-align: center;
-        color: var(--color-text-muted);
+    /* Galeria potrzebuje więcej miejsca niż zwykły tekst */
+    .gallery {
+        max-width: 1200px;
     }
 </style>

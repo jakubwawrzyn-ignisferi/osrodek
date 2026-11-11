@@ -1,0 +1,43 @@
+/* Liczba kafelków w rzędzie: --cols (domyślnie 5, mniej na węższych ekranach).
+   Niepełny ostatni rząd jest wyśrodkowany. */
+.grid {
+  --cols: var(--max-cols, 5);
+  --gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  max-width: var(--content-width);
+  margin: 1.5rem auto 0;
+  padding: 0 clamp(1rem, 2vw, 2rem);
+  list-style: none;
+}
+
+.item {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
+}
+
+@media (max-width: 1300px) {
+  .grid {
+    --cols: min(var(--max-cols, 5), 4);
+  }
+}
+
+@media (max-width: 1040px) {
+  .grid {
+    --cols: 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .grid {
+    --cols: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    --cols: 1;
+  }
+}

@@ -106,10 +106,9 @@ function normalizePage(page) {
     slug: page.slug,
     title: plainTitle(page.title?.rendered, ''),
     contentHtml: page.content?.rendered || '',
-    image: featuredImage(page),
-    // Pola dodane wtyczką ACF (Advanced Custom Fields). Gdy strona nie ma żadnych pól,
-    // ACF zwraca pustą tablicę zamiast obiektu - wtedy podstawiamy pusty obiekt.
-    fields: page.acf && !Array.isArray(page.acf) ? page.acf : {},
+    // Obrazek wyróżniający: duży na nagłówek podstrony, mniejszy na kafelek.
+    image: featuredImage(page, '2048x2048'),
+    cardImage: featuredImage(page, 'medium_large'),
   };
 }
 
@@ -120,32 +119,29 @@ export async function getPage(slug) {
   return page ? normalizePage(page) : null;
 }
 
-// Zamienia wartość pola obrazka z ACF na { url, alt }.
-// W zależności od ustawień pola ACF zwraca ID obrazka, obiekt albo sam adres URL,
-// więc obsługujemy wszystkie trzy warianty. `size` to preferowany rozmiar z WP
-// (np. '2048x2048'); jeśli go nie ma, bierzemy oryginał.
-export async function getImageField(value, size = 'large') {
-  if (!value) return null;
+// Wszystkie opublikowane strony WP jako mapa slug -> strona.
+// Z niej podstrony kafelków biorą treść, a kafelki i nagłówki - zdjęcia (obrazek wyróżniający).
+// Przy budowaniu strony pobieramy je raz; w trybie dev za każdym razem, żeby zmiany w WP
+// były widoczne od razu po odświeżeniu.
+let allPagesCache = null;
 
-  if (typeof value === 'string') {
-    return { url: value, alt: '' };
-  }
+export async function getAllPages() {
+  if (import.meta.env.PROD && allPagesCache) return allPagesCache;
 
-  if (typeof value === 'number') {
-    const result = await wpFetch(`/media/${value}`);
-    const media = result?.data;
-    if (!media?.source_url) return null;
-    return {
-      url: media.media_details?.sizes?.[size]?.source_url || media.source_url,
-      alt: media.alt_text || '',
-    };
-  }
+  const pages = new Map();
+  let page = 1;
+  let totalPages = 1;
 
-  if (typeof value === 'object' && value.url) {
-    return { url: value.sizes?.[size] || value.url, alt: value.alt || '' };
-  }
+  do {
+    const result = await wpFetch(`/pages?per_page=100&page=${page}&_embed`);
+    if (!result) break;
+    for (const item of result.data) pages.set(item.slug, normalizePage(item));
+    totalPages = Number(result.headers.get('X-WP-TotalPages')) || 1;
+    page += 1;
+  } while (page <= totalPages);
 
-  return null;
+  allPagesCache = pages;
+  return pages;
 }
 
 // Najnowsze wpisy (domyślnie 3).

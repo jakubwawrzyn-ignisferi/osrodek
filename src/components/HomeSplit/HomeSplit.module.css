@@ -1,0 +1,173 @@
+/* Trzy kolumny: połowa ciepła | logo z hasłem | połowa zielona */
+.split {
+  display: grid;
+  grid-template-columns: 1fr minmax(180px, 230px) 1fr;
+  background:
+    linear-gradient(to bottom, transparent 80%, var(--color-page) 100%),
+    linear-gradient(to right, #ecce9a 0%, #f4e4c6 38%, #f2ecdc 50%, #dbe9dd 62%, #b9d3bf 100%);
+}
+
+/* --- Połowa --- */
+.half {
+  position: relative;
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) 2.5rem;
+  isolation: isolate;
+}
+
+/* Nagłówek połowy na jasnej mgiełce */
+.head {
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at center, rgba(253, 250, 242, 0.9) 40%, rgba(253, 250, 242, 0.55) 100%);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-heading);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #2c2a24;
+}
+
+.title {
+  margin: 0;
+  padding-bottom: 0.7rem;
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  background: linear-gradient(currentColor, currentColor) bottom center / 90px 2px no-repeat;
+}
+
+.title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.warm .title {
+  color: #6e2416;
+}
+
+.green .title {
+  color: var(--color-primary);
+}
+
+.lead {
+  margin: 0.8rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2c2a24;
+}
+
+/* Kafelki-linki */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- Środek: logo, hasło, słońce --- */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2rem 0.5rem 0;
+  text-align: center;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  box-shadow: 0 10px 30px -14px rgba(31, 77, 54, 0.6);
+}
+
+.logo img {
+  width: 76px;
+  height: auto;
+}
+
+.slogan {
+  margin: 1.25rem 0 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Wschodzące słońce */
+.sun {
+  width: 120px;
+  height: 60px;
+  border-radius: 120px 120px 0 0;
+  background: linear-gradient(to bottom, #f6c35e, #f2a93b);
+}
+
+/* Telefon i tablet: połowy jedna pod drugą, logo z hasłem między nimi */
+@media (max-width: 1000px) {
+  .split {
+    grid-template-columns: 1fr;
+    background: none;
+  }
+
+  .warm {
+    background: linear-gradient(to bottom, #f1d9ad, #f5e3c3);
+  }
+
+  .green {
+    background: linear-gradient(to bottom, #dbe9dd, #c4dacb);
+  }
+
+  .center {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(to bottom, #f5e3c3, #dbe9df);
+    text-align: left;
+  }
+
+  .logo {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+  }
+
+  .logo img {
+    width: 52px;
+  }
+
+  .slogan {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .sun {
+    display: none;
+  }
+}

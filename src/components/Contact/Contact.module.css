@@ -21,7 +21,7 @@
 
 /* Karta adresu wyróżniona czerwienią z logo */
 .addressCard {
-  background-color: var(--color-accent);
+  background-color: var(--color-primary);
   color: #fff;
 }
 
@@ -46,7 +46,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .cardTitle {
@@ -85,7 +85,7 @@
 }
 
 .listIcon {
-  color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .label {
@@ -103,7 +103,7 @@
 }
 
 .value:hover {
-  color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .social {

@@ -5,8 +5,10 @@ import { organization, units, legalPages, telHref } from '../../data/site.js';
 import styles from './Footer.module.css';
 
 const otherLinks = [
+  { label: 'Dokumenty', href: '/dokumenty' },
   { label: 'O nas', href: '/about-us' },
   { label: 'Aktualności', href: '/news' },
+  { label: 'Galeria', href: '/gallery' },
   { label: 'Kontakt', href: '/contact' },
 ];
 
