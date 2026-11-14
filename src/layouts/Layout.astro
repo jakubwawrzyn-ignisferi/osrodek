@@ -52,6 +52,10 @@ const {
   noindex = false,
 } = Astro.props;
 
+// NOINDEX=true w .env (adres tymczasowy): żadna podstrona nie trafia do wyszukiwarek.
+const siteNoindex = import.meta.env.NOINDEX === 'true';
+const hideFromSearch = noindex || siteNoindex;
+
 const siteName = 'Salezjański Dom Młodzieżowy w Różanymstoku';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 
@@ -66,12 +70,12 @@ const shareImage = image?.url ?? (Astro.site ? new URL('/og-image.png', Astro.si
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {hideFromSearch && <meta name="robots" content="noindex" />}
     {pageUrl && <link rel="canonical" href={pageUrl} />}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    {Astro.site && <link rel="sitemap" href="/sitemap-index.xml" />}
+    {Astro.site && !siteNoindex && <link rel="sitemap" href="/sitemap-index.xml" />}
 
     <!-- Podgląd linku w mediach społecznościowych -->
     <meta property="og:type" content="website" />

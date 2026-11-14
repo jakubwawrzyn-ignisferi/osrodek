@@ -1,0 +1,12 @@
+# public/.htaccess
+# Przy budowaniu trafia do dist/.htaccess, a po wdrożeniu do public_html/.htaccess.
+# Dotyczy strony Astro. WordPress w /cms ma własny plik public_html/cms/.htaccess
+# (tworzy go WordPress, są w nim też podniesione limity PHP) - ten plik go nie zastępuje.
+#
+# Przekierowania HTTP -> HTTPS nie ma tu celowo: wymusza je serwer hostingu.
+
+# Własna strona błędu dla nieistniejących adresów (src/pages/404.astro).
+ErrorDocument 404 /404.html
+
+# Bez listy plików w katalogach, które nie mają index.html (dotyczy też /cms).
+Options -Indexes
