@@ -52,16 +52,25 @@ skończyła się wgraniem pustej strony.
 
 ## Aktualizacja strony (po zmianach w WP lub w kodzie)
 
+> **Nie używaj w WinSCP polecenia "Synchronizuj" z usuwaniem plików.** WordPress leży w
+> `public_html/cms/`, a folderu `cms` nie ma w `dist`, więc synchronizacja oznacza go do
+> usunięcia. Maska wykluczeń okazała się zawodna (sprawdzone w praktyce). Usunięcie `cms`
+> to utrata WordPressa ze wszystkimi zdjęciami.
+
 1. `npm run build` - wynik w folderze `dist/`.
 2. Opcjonalnie `npm run preview` i sprawdzenie na http://localhost:4321.
-3. WinSCP (protokół **SFTP**, port 22) -> lewy panel: `dist`, prawy panel: `public_html`.
-4. **Polecenia -> Synchronizuj**, kierunek: zdalny (lokalny -> serwer), z usuwaniem plików,
-   których nie ma lokalnie. W ustawieniach transferu dodaj **maskę wykluczeń: `cms/`**.
-   **Bez tej maski synchronizacja usunie WordPressa.**
-5. Sprawdź stronę w przeglądarce (najlepiej w oknie prywatnym).
-
-Przy pierwszym wgraniu można zamiast synchronizacji po prostu skopiować zawartość `dist`
-do `public_html` z zastąpieniem plików.
+3. WinSCP (protokół **SFTP**, port 22) -> lewy panel: `D:\Projekty\osrodek\dist`,
+   prawy panel: `public_html`.
+4. W lewym panelu włącz pokazywanie ukrytych plików (**Ctrl+Alt+H**), żeby skopiował się
+   też `.htaccess`.
+5. Zaznacz wszystko w lewym panelu (**Ctrl+A**), przeciągnij do prawego i przy pytaniu
+   o nadpisanie wybierz **"Tak dla wszystkich"**. Kopiowanie tylko dodaje i zastępuje
+   pliki - niczego nie usuwa, więc `cms` jest bezpieczny.
+6. **Tylko jeśli w WP usunięto wpis albo stronę albo zmieniono jej adres (slug):** usuń na
+   serwerze ręcznie jej stary folder, np. `public_html/news/stary-adres-wpisu/`. Nazwy
+   folderów to adresy podstron. Bez tego stara wersja nadal będzie dostępna pod starym
+   adresem (choć zniknie z list i menu). Nigdy nie usuwaj `cms`.
+7. Sprawdź stronę w przeglądarce (najlepiej w oknie prywatnym).
 
 ## WordPress na serwerze
 
