@@ -6,7 +6,7 @@
 //           pochodzą ze strony WordPressa o TYM SAMYM slugu (zdjęcie = obrazek wyróżniający).
 //           Gdy takiej strony w WP nie ma, podstrona nie powstaje, a kafelek nie jest linkiem
 //           (bez strzałki). Wystarczy utworzyć stronę w WP i przebudować serwis.
-//   href  - (opcjonalnie) gotowy adres, gdy kafelek prowadzi do istniejącej strony (np. /news).
+//   href  - (opcjonalnie) gotowy adres, gdy kafelek prowadzi do istniejącej strony (np. /aktualnosci/).
 //   label - napis na kafelku
 //   icon  - nazwa ikony z biblioteki lucide (lista dostępnych w src/components/Icon/Icon.jsx)
 //   color - kolor kwadratu z ikoną: green, brown, bordo, navy, teal
@@ -27,10 +27,10 @@ export const home = {
       tiles: [
         { slug: 'kucharz', label: 'Kucharz', icon: 'ChefHat', color: 'brown' },
         { slug: 'stolarz', label: 'Stolarz', icon: 'Hammer', color: 'brown' },
-        { slug: 'aktualnosci', href: '/news', label: 'Aktualności', icon: 'Newspaper', color: 'brown' },
+        { slug: 'aktualnosci', href: '/aktualnosci/', label: 'Aktualności', icon: 'Newspaper', color: 'brown' },
         {
           slug: 'nasze-dzialania',
-          href: '/dzialania-wychowawczo-terapeutyczne',
+          href: '/dzialania-wychowawczo-terapeutyczne/',
           label: 'Nasze działania',
           icon: 'Users',
           color: 'brown',
@@ -48,21 +48,21 @@ export const home = {
         { slug: 'nasz-dom', label: 'Nasz dom', icon: 'House', color: 'green' },
         {
           slug: 'zaplecze-sportowo-rekreacyjne',
-          href: '/zaplecze-sportowo-rekreacyjne',
+          href: '/zaplecze-sportowo-rekreacyjne/',
           label: 'Zaplecze sportowo-rekreacyjne',
           icon: 'Volleyball',
           color: 'green',
         },
         {
           slug: 'dzialania-wychowawczo-terapeutyczne',
-          href: '/dzialania-wychowawczo-terapeutyczne',
+          href: '/dzialania-wychowawczo-terapeutyczne/',
           label: 'Działania wychowawczo-terapeutyczne',
           icon: 'HandHeart',
           color: 'green',
         },
         {
           slug: 'grupy-zainteresowan',
-          href: '/grupy-zainteresowan',
+          href: '/grupy-zainteresowan/',
           label: 'Grupy zainteresowań',
           icon: 'Users',
           color: 'green',
@@ -158,7 +158,7 @@ export const sections = [
 // pages - mapa slug -> strona z getAllPages() (src/lib/wordpress.js).
 export function tileHref(tile, pages) {
   if (tile.href) return tile.href;
-  return pages.has(tile.slug) ? `/${tile.slug}` : null;
+  return pages.has(tile.slug) ? `/${tile.slug}/` : null;
 }
 
 // Kafelki gotowe do wyświetlenia: adres + zdjęcie z obrazka wyróżniającego strony WP o tym slugu.
@@ -187,7 +187,7 @@ export function getTilePages(pages) {
   }
 
   for (const section of sections) {
-    const parent = { label: `${section.titleTop} ${section.titleBottom}`, href: `/${section.slug}` };
+    const parent = { label: `${section.titleTop} ${section.titleBottom}`, href: `/${section.slug}/` };
     for (const tile of section.tiles) add(tile, parent);
   }
 

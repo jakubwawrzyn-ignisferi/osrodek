@@ -23,7 +23,13 @@ Strona Salezjańskiego Domu Młodzieżowego w Różanymstoku.
 - **Zmiana treści w WP nie pojawia się na stronie sama.** Trzeba przebudować stronę i wgrać ją
   na serwer (patrz "Aktualizacja strony").
 - Linki do innych podstron wpisuj w edytorze WP jako ścieżki strony, np. `/rekrutacja`, a nie pełne
-  adresy WordPressa (`.../cms/...`).
+  adresy WordPressa (`.../cms/...`). Ukośnik na końcu (`/rekrutacja/`) dopisuje się sam przy budowaniu.
+- Adresy podstron są po polsku: `/o-nas/`, `/kontakt/`, `/galeria/`, `/aktualnosci/`. Stare
+  angielskie (`/about-us`, `/contact`, `/gallery`, `/news/...`) przekierowuje `public/.htaccess`.
+- Strony prawne (Polityka prywatności, Ochrona danych (RODO), Deklaracja dostępności) powstają
+  i pojawiają się w stopce oraz na `/dokumenty/` dopiero, gdy w WP istnieje opublikowana strona
+  o slugu `polityka-prywatnosci`, `ochrona-danych` lub `deklaracja-dostepnosci` z treścią.
+  Wystarczy ją utworzyć i przebudować serwis. Lista: `legalPages` w `src/data/site.js`.
 - Część treści jest w kodzie, nie w WP: kafelki (`src/data/sections.js`), dane kontaktowe
   i dokumenty (`src/data/site.js`), rekrutacja i metody pracy (`src/data/content.js`).
 - Hasła nie trafiają do repozytorium. Frontend nie potrzebuje żadnych haseł do WordPressa.
@@ -67,7 +73,7 @@ skończyła się wgraniem pustej strony.
    o nadpisanie wybierz **"Tak dla wszystkich"**. Kopiowanie tylko dodaje i zastępuje
    pliki - niczego nie usuwa, więc `cms` jest bezpieczny.
 6. **Tylko jeśli w WP usunięto wpis albo stronę albo zmieniono jej adres (slug):** usuń na
-   serwerze ręcznie jej stary folder, np. `public_html/news/stary-adres-wpisu/`. Nazwy
+   serwerze ręcznie jej stary folder, np. `public_html/aktualnosci/stary-adres-wpisu/`. Nazwy
    folderów to adresy podstron. Bez tego stara wersja nadal będzie dostępna pod starym
    adresem (choć zniknie z list i menu). Nigdy nie usuwaj `cms`.
 7. Sprawdź stronę w przeglądarce (najlepiej w oknie prywatnym).

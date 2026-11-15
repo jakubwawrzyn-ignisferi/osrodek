@@ -27,7 +27,7 @@ export default function HelpBar() {
           ))}
         </ul>
 
-        <a href="/standardy-ochrony" className={styles.cta}>
+        <a href="/standardy-ochrony/" className={styles.cta}>
           Standardy ochrony małoletnich <span aria-hidden="true">&rarr;</span>
         </a>
       </div>

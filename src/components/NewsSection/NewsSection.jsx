@@ -1,6 +1,6 @@
 // src/components/NewsSection/NewsSection.jsx
 // Siatka kafelków z aktualnościami. Na stronie głównej z tytułem i linkiem "Wszystkie aktualności",
-// na stronie /news bez nich (tytuł strony jest wtedy w nagłówku Banner).
+// na stronie /aktualnosci/ bez nich (tytuł strony jest wtedy w nagłówku Banner).
 // Wpisy przychodzą już przetworzone przez src/lib/wordpress.js.
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
@@ -16,7 +16,7 @@ export default function NewsSection({ posts = [], title = null, showAllLink = tr
             {title}
           </h2>
           {showAllLink && (
-            <a href="/news" className="btn btn-primary">
+            <a href="/aktualnosci/" className="btn btn-primary">
               Wszystkie aktualności <ArrowRight size={18} aria-hidden="true" />
             </a>
           )}

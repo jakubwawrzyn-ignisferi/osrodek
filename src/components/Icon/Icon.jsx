@@ -5,6 +5,7 @@
 // Nowa ikona: dopisz ją do importu i do obiektu `icons` (nazwy: https://lucide.dev/icons).
 import React from 'react';
 import {
+  Accessibility,
   Activity,
   Bike,
   BookOpen,
@@ -51,6 +52,7 @@ import {
 } from 'lucide-react';
 
 const icons = {
+  Accessibility,
   Activity,
   Bike,
   BookOpen,

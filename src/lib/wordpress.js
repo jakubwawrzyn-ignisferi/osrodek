@@ -81,10 +81,17 @@ function plainExcerpt(rendered = '') {
     .trim();
 }
 
+// Linki do podstron wpisane w edytorze WP jako "/rekrutacja" zamieniamy na "/rekrutacja/"
+// (tak wyglądają adresy na serwerze - bez ukośnika każde kliknięcie to dodatkowe przekierowanie).
+// Pomijamy adresy z kropką (pliki), z ukośnikiem na końcu i adresy WordPressa (/cms/...).
+function fixInternalLinks(html = '') {
+  return html.replace(/href="(\/(?!cms\/)[^"#?.]*[^/"#?.])([#?][^"]*)?"/g, 'href="$1/$2"');
+}
+
 // Zamienia surowy obiekt z WP na prosty obiekt używany przez komponenty.
 // Dzięki temu komponenty nie muszą znać struktury odpowiedzi WP.
 function normalizePost(post) {
-  const contentHtml = post.content?.rendered || '';
+  const contentHtml = fixInternalLinks(post.content?.rendered);
   return {
     id: post.id,
     slug: post.slug,
@@ -105,7 +112,7 @@ function normalizePage(page) {
     id: page.id,
     slug: page.slug,
     title: plainTitle(page.title?.rendered, ''),
-    contentHtml: page.content?.rendered || '',
+    contentHtml: fixInternalLinks(page.content?.rendered),
     // Obrazek wyróżniający: duży na nagłówek podstrony, mniejszy na kafelek.
     image: featuredImage(page, '2048x2048'),
     cardImage: featuredImage(page, 'medium_large'),

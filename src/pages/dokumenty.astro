@@ -1,15 +1,17 @@
 ---
 // src/pages/dokumenty.astro
 // Opcjonalny wstęp i pliki: strona WP "dokumenty" (pliki najlepiej blokiem "Plik").
-// Pod spodem kafelki z podstronami wymaganymi przepisami (src/data/site.js).
+// Pod spodem kafelki z podstronami wymaganymi przepisami (src/data/site.js) - tylko tymi,
+// które mają treść w WP.
 import Layout from '../layouts/Layout.astro';
 import Banner from '../components/Banner/Banner.jsx';
 import TileGrid from '../components/TileGrid/TileGrid.jsx';
-import { getPage } from '../lib/wordpress.js';
-import { legalPages } from '../data/site.js';
+import { getAllPages } from '../lib/wordpress.js';
+import { availableLegalPages } from '../data/site.js';
 
-const page = await getPage('dokumenty');
-const tiles = legalPages.map((item) => ({
+const pages = await getAllPages();
+const page = pages.get('dokumenty');
+const tiles = availableLegalPages(pages).map((item) => ({
     href: item.href,
     label: item.label,
     icon: item.icon,

@@ -1,7 +1,8 @@
 # public/.htaccess
 # Przy budowaniu trafia do dist/.htaccess, a po wdrożeniu do public_html/.htaccess.
 # Dotyczy strony Astro. WordPress w /cms ma własny plik public_html/cms/.htaccess
-# (tworzy go WordPress, są w nim też podniesione limity PHP) - ten plik go nie zastępuje.
+# (tworzy go WordPress, są w nim też podniesione limity PHP) - ten plik go nie zastępuje,
+# ale reguły poniżej działają też dla adresów /cms/... (Apache czyta pliki od góry katalogów).
 #
 # Przekierowania HTTP -> HTTPS nie ma tu celowo: wymusza je serwer hostingu.
 
@@ -10,3 +11,27 @@ ErrorDocument 404 /404.html
 
 # Bez listy plików w katalogach, które nie mają index.html (dotyczy też /cms).
 Options -Indexes
+
+# Stare (angielskie) adresy podstron -> nowe polskie. Zostawić na stałe: ktoś mógł zapisać
+# albo udostępnić stary link.
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^/about-us/?$ /o-nas/
+  RedirectMatch 301 ^/contact/?$ /kontakt/
+  RedirectMatch 301 ^/gallery/?$ /galeria/
+  RedirectMatch 301 ^/news/?$ /aktualnosci/
+  RedirectMatch 301 ^/news/(.+)$ /aktualnosci/$1
+
+  # Pliki instalacyjne WordPressa zdradzają jego wersję - udajemy, że ich nie ma.
+  RedirectMatch 404 ^/cms/(readme\.html|license\.txt|wp-config-sample\.php)$
+</IfModule>
+
+# Nagłówki bezpieczeństwa. HSTS (Strict-Transport-Security) celowo bez "preload" i na rok:
+# po zmianie domeny nowa też musi mieć działający certyfikat SSL.
+# X-Frame-Options pomijamy: WordPress w /cms ustawia go sam, a podwójny nagłówek bywa
+# odczytywany przez przeglądarki jako błędny.
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>

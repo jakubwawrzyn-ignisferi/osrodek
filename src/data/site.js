@@ -48,12 +48,25 @@ export const helplines = [
 ];
 
 // Podstrony z informacjami wymaganymi przepisami - kolumna "Informacje" w stopce i kafelki na /dokumenty.
-// `slug` to adres strony w WordPressie, z której pobierana jest treść.
+// `slug` to adres strony w WordPressie, z której pobierana jest treść (i adres podstrony).
+// `always: true` - podstrona ma własny plik w src/pages i jest zawsze widoczna.
+// Pozostałe powstają (src/pages/[slug].astro) i pojawiają się w stopce oraz na /dokumenty dopiero,
+// gdy w WP istnieje opublikowana strona o tym slugu z treścią. Dzięki temu nie publikujemy
+// pustych stron "w przygotowaniu" - wystarczy utworzyć stronę w WP i przebudować serwis.
 export const legalPages = [
-  { label: 'Standardy ochrony małoletnich', href: '/standardy-ochrony', slug: 'standardy-ochrony', icon: 'ShieldCheck', color: 'green' },
-  { label: 'Polityka prywatności', href: '/polityka-prywatnosci', slug: 'polityka-prywatnosci', icon: 'FileText', color: 'brown' },
-  { label: 'Ochrona danych (RODO)', href: '/ochrona-danych', slug: 'ochrona-danych', icon: 'FileText', color: 'navy' },
+  { label: 'Standardy ochrony małoletnich', slug: 'standardy-ochrony', always: true, icon: 'ShieldCheck', color: 'green' },
+  { label: 'Polityka prywatności', slug: 'polityka-prywatnosci', icon: 'FileText', color: 'brown' },
+  { label: 'Ochrona danych (RODO)', slug: 'ochrona-danych', icon: 'FileText', color: 'navy' },
+  { label: 'Deklaracja dostępności', slug: 'deklaracja-dostepnosci', icon: 'Accessibility', color: 'teal' },
 ];
+
+// Strony prawne, które mają co pokazać, z gotowym adresem.
+// pages - mapa slug -> strona z getAllPages() (src/lib/wordpress.js).
+export function availableLegalPages(pages) {
+  return legalPages
+    .filter((item) => item.always || pages.get(item.slug)?.contentHtml)
+    .map((item) => ({ ...item, href: `/${item.slug}/` }));
+}
 
 // "728 887 570" -> "tel:+48728887570" (link, który na telefonie od razu dzwoni).
 // Numery skrócone (np. 116 111) zostają bez prefiksu kraju.

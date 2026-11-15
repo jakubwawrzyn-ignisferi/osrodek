@@ -6,33 +6,48 @@
 // Treść i zdjęcie każdej z nich pochodzą ze strony WordPressa o tym samym slugu
 // (treść strony + obrazek wyróżniający). Podstrona kafelka powstaje tylko wtedy, gdy taka
 // strona w WP istnieje - wystarczy ją utworzyć i przebudować serwis.
+//  - strony prawne z src/data/site.js (polityka prywatności, RODO, deklaracja dostępności),
+//    gdy w WP istnieje strona o tym slugu z treścią.
 import Layout from '../layouts/Layout.astro';
 import Banner from '../components/Banner/Banner.jsx';
 import TileGrid from '../components/TileGrid/TileGrid.jsx';
+import InfoPage from '../components/InfoPage/InfoPage.jsx';
 import { sections, getTilePages, withImages } from '../data/sections.js';
+import { availableLegalPages } from '../data/site.js';
 import { getAllPages } from '../lib/wordpress.js';
 
 export async function getStaticPaths() {
+  const allPages = await getAllPages();
   const sectionPaths = sections.map((section) => ({
     params: { slug: section.slug },
     props: { kind: 'section', section },
   }));
-  const tilePaths = getTilePages(await getAllPages()).map((tile) => ({
+  const tilePaths = getTilePages(allPages).map((tile) => ({
     params: { slug: tile.slug },
     props: { kind: 'tile', tile },
   }));
-  return [...sectionPaths, ...tilePaths];
+  // Strony z `always: true` mają własny plik w src/pages (np. standardy-ochrony.astro).
+  const legalPaths = availableLegalPages(allPages)
+    .filter((item) => !item.always)
+    .map((item) => ({
+      params: { slug: item.slug },
+      props: { kind: 'legal', legal: item },
+    }));
+  return [...sectionPaths, ...tilePaths, ...legalPaths];
 }
 
-const { kind, section, tile } = Astro.props;
+const { kind, section, tile, legal } = Astro.props;
 const pages = await getAllPages();
 const wpPage = pages.get(Astro.params.slug);
 
-const title = kind === 'section' ? `${section.titleTop} ${section.titleBottom}` : wpPage?.title || tile.label;
+const fallbackTitle = kind === 'legal' ? legal.label : tile?.label;
+const title = kind === 'section' ? `${section.titleTop} ${section.titleBottom}` : wpPage?.title || fallbackTitle;
 const tiles = kind === 'section' ? withImages(section.tiles, pages) : [];
 ---
 <Layout title={title} tagline={section?.tagline} image={wpPage?.image}>
-    {kind === 'section' ? (
+    {kind === 'legal' ? (
+        <InfoPage title={title} contentHtml={wpPage?.contentHtml} />
+    ) : kind === 'section' ? (
         <>
             <Banner
                 titleTop={section.titleTop}

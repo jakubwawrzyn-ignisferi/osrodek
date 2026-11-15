@@ -1,18 +1,21 @@
 // src/components/Footer/Footer.jsx
 // Stopka strony: nazwa ośrodka, dane kontaktowe placówek i linki do informacji prawnych.
 import React from 'react';
-import { organization, units, legalPages, telHref } from '../../data/site.js';
+import { organization, units, telHref } from '../../data/site.js';
 import styles from './Footer.module.css';
 
+// legalLinks - strony prawne do pokazania (availableLegalPages() z src/data/site.js,
+// wyliczane w Layout.astro, bo wymagają listy stron z WordPressa).
+
 const otherLinks = [
-  { label: 'Dokumenty', href: '/dokumenty' },
-  { label: 'O nas', href: '/about-us' },
-  { label: 'Aktualności', href: '/news' },
-  { label: 'Galeria', href: '/gallery' },
-  { label: 'Kontakt', href: '/contact' },
+  { label: 'Dokumenty', href: '/dokumenty/' },
+  { label: 'O nas', href: '/o-nas/' },
+  { label: 'Aktualności', href: '/aktualnosci/' },
+  { label: 'Galeria', href: '/galeria/' },
+  { label: 'Kontakt', href: '/kontakt/' },
 ];
 
-export default function Footer() {
+export default function Footer({ legalLinks = [] }) {
   const year = new Date().getFullYear();
 
   return (
@@ -24,7 +27,7 @@ export default function Footer() {
             <img src="/logo.svg" alt="" width="48" height="51" />
           </span>
           <p className={styles.name}>
-            {organization.name}
+            {organization.name}{' '}
             <span className={styles.patron}>{organization.patron}</span>
           </p>
           <address className={styles.address}>
@@ -66,7 +69,7 @@ export default function Footer() {
         <nav className={styles.column} aria-label="Informacje">
           <h2 className={styles.heading}>Informacje</h2>
           <ul className={styles.list}>
-            {legalPages.map((page) => (
+            {legalLinks.map((page) => (
               <li key={page.href}>
                 <a href={page.href} className={styles.link}>
                   {page.label}

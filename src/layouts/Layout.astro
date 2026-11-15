@@ -7,6 +7,8 @@ import Navbar from '../components/Navbar/Navbar.jsx';
 import HelpBar from '../components/HelpBar/HelpBar.jsx';
 import Landscape from '../components/Landscape/Landscape.jsx';
 import Footer from '../components/Footer/Footer.jsx';
+import { availableLegalPages } from '../data/site.js';
+import { getAllPages } from '../lib/wordpress.js';
 
 // Czcionki dołączone do projektu (bez łączenia z serwerami Google).
 // Tylko alfabet łaciński: "latin" + "latin-ext" (polskie znaki).
@@ -63,6 +65,9 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 // pomijamy znaczniki, które wymagają pełnego adresu (canonical, og:url, domyślny obrazek).
 const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
 const shareImage = image?.url ?? (Astro.site ? new URL('/og-image.png', Astro.site).href : null);
+
+// Linki do stron prawnych w stopce - tylko tych, które mają treść w WP (patrz src/data/site.js).
+const legalLinks = availableLegalPages(await getAllPages());
 ---
 <!doctype html>
 <html lang="pl">
@@ -108,6 +113,6 @@ const shareImage = image?.url ?? (Astro.site ? new URL('/og-image.png', Astro.si
     </main>
     {showHelpBar && <HelpBar />}
     <Landscape tagline={tagline} />
-    <Footer />
+    <Footer legalLinks={legalLinks} />
   </body>
 </html>

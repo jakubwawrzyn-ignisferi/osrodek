@@ -1,10 +1,10 @@
 // src/lib/news.js
-// Podział aktualności na strony: /news (strona 1), /news/strona/2, /news/strona/3...
+// Podział aktualności na strony: /aktualnosci/ (strona 1), /aktualnosci/strona/2/, /aktualnosci/strona/3/...
 
 export const POSTS_PER_PAGE = 12;
 
 export function newsPageHref(page) {
-  return page === 1 ? '/news' : `/news/strona/${page}`;
+  return page === 1 ? '/aktualnosci/' : `/aktualnosci/strona/${page}/`;
 }
 
 // Wpisy z danej strony (numerowanej od 1) i liczba wszystkich stron.

@@ -12,7 +12,7 @@ import { getAllPages, getLatestPosts } from '../lib/wordpress.js';
 const pages = await getAllPages();
 const halves = home.halves.map((half) => ({
     ...half,
-    href: pages.has(half.slug) ? `/${half.slug}` : null,
+    href: pages.has(half.slug) ? `/${half.slug}/` : null,
     tiles: withImages(half.tiles, pages),
 }));
 

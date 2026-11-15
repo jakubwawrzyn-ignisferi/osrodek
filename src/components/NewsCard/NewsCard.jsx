@@ -30,7 +30,7 @@ export default function NewsCard({ post }) {
             {dateLabel}
           </time>
           <h3 className={styles.title}>
-            <a href={`/news/${slug}`} className={styles.link}>
+            <a href={`/aktualnosci/${slug}/`} className={styles.link}>
               {title}
             </a>
           </h3>

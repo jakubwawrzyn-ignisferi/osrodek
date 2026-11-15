@@ -9,15 +9,18 @@ import { organization } from '../../data/site.js';
 import styles from './Navbar.module.css';
 
 const menuItems = [
-  { label: 'Dokumenty', href: '/dokumenty', Icon: FileText },
-  { label: 'O nas', href: '/about-us', Icon: Users },
-  { label: 'System pracy', href: '/system-pracy', Icon: Settings },
-  { label: 'Rekrutacja', href: '/rekrutacja', Icon: GraduationCap },
-  { label: 'Kontakt', href: '/contact', Icon: Phone },
+  { label: 'Dokumenty', href: '/dokumenty/', Icon: FileText },
+  { label: 'O nas', href: '/o-nas/', Icon: Users },
+  { label: 'System pracy', href: '/system-pracy/', Icon: Settings },
+  { label: 'Rekrutacja', href: '/rekrutacja/', Icon: GraduationCap },
+  { label: 'Kontakt', href: '/kontakt/', Icon: Phone },
 ];
 
+// Adresy w menu kończą się ukośnikiem (/o-nas/). Bieżąca ścieżka może być z nim albo bez,
+// więc przed porównaniem dopisujemy go.
 function isActive(href, currentPath) {
-  return currentPath === href || currentPath.startsWith(`${href}/`);
+  const path = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+  return path.startsWith(href);
 }
 
 export default function Navbar({ currentPath = '/' }) {

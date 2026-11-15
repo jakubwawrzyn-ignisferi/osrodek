@@ -1,5 +1,5 @@
 // src/components/Pagination/Pagination.jsx
-// Numery stron pod listą aktualności. Pierwsza strona to /news, kolejne /news/strona/2 itd.
+// Numery stron pod listą aktualności. Pierwsza strona to /aktualnosci/, kolejne /aktualnosci/strona/2/ itd.
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { newsPageHref } from '../../lib/news.js';
