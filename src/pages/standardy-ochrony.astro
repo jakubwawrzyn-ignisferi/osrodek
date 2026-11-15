@@ -1,0 +1,17 @@
+---
+// src/pages/standardy-ochrony.astro
+// Treść i pliki PDF pochodzą ze strony WP o slugu "standardy-ochrony".
+// Pliki najlepiej wstawiać w edytorze WP blokiem "Plik" - wyświetlą się jako kafelki do pobrania.
+import Layout from '../layouts/Layout.astro';
+import InfoPage from '../components/InfoPage/InfoPage.jsx';
+import HelpContacts from '../components/HelpContacts/HelpContacts.jsx';
+import { getPage } from '../lib/wordpress.js';
+
+const page = await getPage('standardy-ochrony');
+const title = page?.title || 'Standardy ochrony małoletnich';
+---
+<Layout title={title} showHelpBar={false}>
+    <InfoPage title={title} contentHtml={page?.contentHtml}>
+        <HelpContacts />
+    </InfoPage>
+</Layout>

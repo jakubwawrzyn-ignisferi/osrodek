@@ -1,0 +1,13 @@
+---
+// src/pages/ochrona-danych.astro
+// Treść pochodzi ze strony WP o slugu "ochrona-danych".
+import Layout from '../layouts/Layout.astro';
+import InfoPage from '../components/InfoPage/InfoPage.jsx';
+import { getPage } from '../lib/wordpress.js';
+
+const page = await getPage('ochrona-danych');
+const title = page?.title || 'Ochrona danych osobowych (RODO)';
+---
+<Layout title={title}>
+    <InfoPage title={title} contentHtml={page?.contentHtml} />
+</Layout>

@@ -1,0 +1,110 @@
+/* Kolor kafelka przychodzi w zmiennej --tile (np. var(--c-green)) */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Zdjęcie */
+.media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0;
+  background-color: var(--color-bg-subtle);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.link:hover .image {
+  transform: scale(1.05);
+}
+
+/* Tło zastępcze, dopóki w WP nie ma zdjęcia */
+.placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.5), transparent 55%),
+    linear-gradient(135deg, color-mix(in srgb, var(--tile) 22%, #f6efe0), color-mix(in srgb, var(--tile) 45%, #f6efe0));
+  color: color-mix(in srgb, var(--tile) 70%, #fff);
+}
+
+/* Pasek z ikoną i nazwą. Kwadrat z ikoną zachodzi na zdjęcie jak w projekcie. */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-grow: 1;
+  padding: 0 0.9rem 0.8rem 0.6rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  margin-top: -20px;
+  border: 3px solid #fff;
+  border-radius: var(--radius-sm);
+  background-color: var(--tile);
+  color: #fff;
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.35);
+}
+
+.label {
+  flex-grow: 1;
+  padding-top: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #23261f;
+}
+
+.chevron {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  margin-top: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--tile);
+  color: #fff;
+  transition: transform 0.2s;
+}
+
+.link:hover .chevron {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:hover,
+  .link:hover .image,
+  .link:hover .chevron {
+    transform: none;
+  }
+}

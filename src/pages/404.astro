@@ -1,0 +1,33 @@
+---
+// src/pages/404.astro - strona pokazywana pod nieistniejącym adresem.
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+---
+<Layout title="Nie znaleziono strony" noindex>
+    <Banner titleTop="Błąd 404" titleBottom="Nie ma takiej strony" />
+    <div class="content-card not-found">
+        <p>Strona mogła zostać przeniesiona albo w adresie jest literówka.</p>
+        <div class="actions">
+            <a href="/" class="btn btn-primary">Strona główna</a>
+            <a href="/contact" class="btn btn-outline">Kontakt</a>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .not-found {
+        text-align: center;
+    }
+
+    .not-found p {
+        margin: 0 0 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+</style>

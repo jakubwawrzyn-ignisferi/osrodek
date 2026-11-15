@@ -1,0 +1,13 @@
+---
+// src/pages/polityka-prywatnosci.astro
+// Treść pochodzi ze strony WP o slugu "polityka-prywatnosci".
+import Layout from '../layouts/Layout.astro';
+import InfoPage from '../components/InfoPage/InfoPage.jsx';
+import { getPage } from '../lib/wordpress.js';
+
+const page = await getPage('polityka-prywatnosci');
+const title = page?.title || 'Polityka prywatności';
+---
+<Layout title={title}>
+    <InfoPage title={title} contentHtml={page?.contentHtml} />
+</Layout>

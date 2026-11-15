@@ -1,0 +1,25 @@
+---
+// src/pages/system-pracy.astro
+// Opcjonalny opis: strona WP "system-pracy". Metody i zajęcia: src/data/content.js.
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+import Methods from '../components/Methods/Methods.jsx';
+import { getPage } from '../lib/wordpress.js';
+import { methods, activities } from '../data/content.js';
+
+const page = await getPage('system-pracy');
+---
+<Layout title="System pracy" image={page?.image}>
+    <Banner
+        titleTop="System pracy"
+        titleBottom="prewencyjny św. Jana Bosko"
+        words={['Rozum', 'Religia', 'Miłość wychowawcza']}
+        image={page?.image}
+    />
+    {page?.contentHtml && (
+        <article class="content-card">
+            <div class="wp-content" set:html={page.contentHtml} />
+        </article>
+    )}
+    <Methods methods={methods} activities={activities} />
+</Layout>

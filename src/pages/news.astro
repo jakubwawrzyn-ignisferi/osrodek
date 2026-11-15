@@ -1,0 +1,16 @@
+---
+// src/pages/news.astro - lista aktualności, strona 1 (kolejne: src/pages/news/strona/[page].astro)
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+import NewsSection from '../components/NewsSection/NewsSection.jsx';
+import Pagination from '../components/Pagination/Pagination.jsx';
+import { getAllPosts } from '../lib/wordpress.js';
+import { paginatePosts } from '../lib/news.js';
+
+const { posts, total } = paginatePosts(await getAllPosts(), 1);
+---
+<Layout title="Aktualności">
+    <Banner titleTop="Aktualności" words={['Z życia ośrodka']} />
+    <NewsSection posts={posts} />
+    <Pagination current={1} total={total} />
+</Layout>

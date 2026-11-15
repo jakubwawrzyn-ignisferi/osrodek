@@ -1,0 +1,27 @@
+---
+// src/pages/dokumenty.astro
+// Opcjonalny wstęp i pliki: strona WP "dokumenty" (pliki najlepiej blokiem "Plik").
+// Pod spodem kafelki z podstronami wymaganymi przepisami (src/data/site.js).
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+import TileGrid from '../components/TileGrid/TileGrid.jsx';
+import { getPage } from '../lib/wordpress.js';
+import { legalPages } from '../data/site.js';
+
+const page = await getPage('dokumenty');
+const tiles = legalPages.map((item) => ({
+    href: item.href,
+    label: item.label,
+    icon: item.icon,
+    color: item.color,
+}));
+---
+<Layout title="Dokumenty" image={page?.image}>
+    <Banner titleTop="Dokumenty" words={['Standardy', 'Przepisy', 'Informacje']} image={page?.image} />
+    <TileGrid tiles={tiles} label="Dokumenty" maxColumns={3} />
+    {page?.contentHtml && (
+        <article class="content-card">
+            <div class="wp-content" set:html={page.contentHtml} />
+        </article>
+    )}
+</Layout>

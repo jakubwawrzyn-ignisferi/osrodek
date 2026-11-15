@@ -1,0 +1,20 @@
+---
+// src/pages/rekrutacja.astro
+// Kroki przyjęcia: src/data/content.js. Dodatkowe informacje: strona WP "rekrutacja".
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+import Admission from '../components/Admission/Admission.jsx';
+import { getPage } from '../lib/wordpress.js';
+import { admission } from '../data/content.js';
+
+const page = await getPage('rekrutacja');
+---
+<Layout title="Rekrutacja" image={page?.image}>
+    <Banner titleTop="Rekrutacja" words={['Podanie', 'Orzeczenie', 'Rozmowa']} image={page?.image} />
+    <Admission {...admission} />
+    {page?.contentHtml && (
+        <article class="content-card">
+            <div class="wp-content" set:html={page.contentHtml} />
+        </article>
+    )}
+</Layout>

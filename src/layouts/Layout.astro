@@ -1,23 +1,113 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+// src/layouts/Layout.astro
+// Wspólny szkielet wszystkich stron: <head>, Navbar, <main>, pasek pomocy, pejzaż i stopka.
+// Użycie na stronie:
+//   <Layout title="Tytuł w karcie przeglądarki" tagline="Hasło nad pejzażem">...treść...</Layout>
+import Navbar from '../components/Navbar/Navbar.jsx';
+import HelpBar from '../components/HelpBar/HelpBar.jsx';
+import Landscape from '../components/Landscape/Landscape.jsx';
+import Footer from '../components/Footer/Footer.jsx';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+// Czcionki dołączone do projektu (bez łączenia z serwerami Google).
+// Tylko alfabet łaciński: "latin" + "latin-ext" (polskie znaki).
+// Montserrat - nagłówki i menu, Noto Sans - tekst, Caveat - odręczne hasła.
+import '@fontsource/montserrat/latin-600.css';
+import '@fontsource/montserrat/latin-ext-600.css';
+import '@fontsource/montserrat/latin-700.css';
+import '@fontsource/montserrat/latin-ext-700.css';
+import '@fontsource/montserrat/latin-800.css';
+import '@fontsource/montserrat/latin-ext-800.css';
+import '@fontsource/noto-sans/latin-400.css';
+import '@fontsource/noto-sans/latin-ext-400.css';
+import '@fontsource/noto-sans/latin-400-italic.css';
+import '@fontsource/noto-sans/latin-ext-400-italic.css';
+import '@fontsource/noto-sans/latin-700.css';
+import '@fontsource/noto-sans/latin-ext-700.css';
+import '@fontsource/caveat/latin-600.css';
+import '@fontsource/caveat/latin-ext-600.css';
+
+import '../styles/global.css';
+import '../styles/wp-content.css';
+
+interface Props {
+  title: string;
+  // Krótki opis strony dla wyszukiwarek
+  description?: string;
+  // Odręczne hasło nad pejzażem na dole strony
+  tagline?: string;
+  // false = bez paska "Potrzebujesz pomocy?" (np. na stronie, która sama pokazuje telefony pomocowe)
+  showHelpBar?: boolean;
+  // Zdjęcie pokazywane w podglądzie linku (Facebook, Messenger itp.), np. obrazek wyróżniający z WP
+  image?: { url: string } | null;
+  // true = strona nie trafia do wyszukiwarek (np. strona błędu 404)
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Salezjański Dom Młodzieżowy w Różanymstoku: Młodzieżowy Ośrodek Socjoterapii, Salezjański Ośrodek Wychowawczy, szkoły i bursa.',
+  tagline = 'Wspólne doświadczenia tworzą silniejszych ludzi',
+  showHelpBar = true,
+  image = null,
+  noindex = false,
+} = Astro.props;
+
+// NOINDEX=true w .env (adres tymczasowy): żadna podstrona nie trafia do wyszukiwarek.
+const siteNoindex = import.meta.env.NOINDEX === 'true';
+const hideFromSearch = noindex || siteNoindex;
+
+const siteName = 'Salezjański Dom Młodzieżowy w Różanymstoku';
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+
+// Adres strony (SITE_URL w .env, patrz astro.config.mjs). Dopóki nie jest ustawiony,
+// pomijamy znaczniki, które wymagają pełnego adresu (canonical, og:url, domyślny obrazek).
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+const shareImage = image?.url ?? (Astro.site ? new URL('/og-image.png', Astro.site).href : null);
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    {hideFromSearch && <meta name="robots" content="noindex" />}
+    {pageUrl && <link rel="canonical" href={pageUrl} />}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {Astro.site && !siteNoindex && <link rel="sitemap" href="/sitemap-index.xml" />}
+
+    <!-- Podgląd linku w mediach społecznościowych -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
+    <meta name="twitter:card" content={shareImage ? 'summary_large_image' : 'summary'} />
+    <meta name="theme-color" content="#1f4d36" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <!-- Pierwszy element dla klawiatury i czytników ekranu: pominięcie menu -->
+    <a href="#tresc" class="skip-link">Przejdź do treści</a>
+
+    <!-- Filtr dający postrzępione, "pędzlowe" brzegi (używany w Banner.module.css) -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <filter id="brush-edge" x="-10%" y="-20%" width="120%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02 0.12" numOctaves="3" seed="7" />
+        <feDisplacementMap in="SourceGraphic" scale="26" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <Navbar client:media="(max-width: 960px)" currentPath={Astro.url.pathname} />
+    <main id="tresc" tabindex="-1">
+      <slot />
+    </main>
+    {showHelpBar && <HelpBar />}
+    <Landscape tagline={tagline} />
+    <Footer />
+  </body>
+</html>

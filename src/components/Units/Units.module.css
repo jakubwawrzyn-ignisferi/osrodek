@@ -1,0 +1,63 @@
+.section {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+}
+
+.title {
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Kolor karty przychodzi w zmiennej --tile */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 3px solid #fff;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1.1rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--tile);
+  color: #fff;
+}
+
+.tag {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tile);
+}
+
+.name {
+  margin: 0 0 0.6rem;
+  font-size: 1.12rem;
+  line-height: 1.3;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}

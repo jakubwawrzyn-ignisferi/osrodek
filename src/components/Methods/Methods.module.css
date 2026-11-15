@@ -1,0 +1,51 @@
+.section {
+  padding-top: var(--section-space);
+}
+
+.title {
+  text-align: center;
+}
+
+.activities {
+  max-width: var(--reading-width);
+  margin: 2.5rem auto 0;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  text-align: center;
+}
+
+.activitiesTitle {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--c-green) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--c-green) 30%, #fff);
+  font-size: 0.95rem;
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .activities {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 1.5rem 1.25rem;
+  }
+}

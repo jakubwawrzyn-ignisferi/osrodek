@@ -1,0 +1,262 @@
+/* src/styles/global.css
+ * Style wspólne dla całej strony. Ładowane raz, w src/layouts/Layout.astro.
+ * Kolory, czcionki i zaokrąglenia są zapisane jako zmienne - zmiana wyglądu w jednym miejscu.
+ * Style poszczególnych komponentów są w plikach *.module.css obok komponentów.
+ *
+ * Kierunek wizualny (wg projektów klienta): las i natura - butelkowa zieleń, brąz i bordo
+ * na kremowym tle, kafelki ze zdjęciem i kolorową ikoną, odręczne hasła, pejzaż na dole strony.
+ */
+
+:root {
+  /* Kolory kafelków i akcentów (każdy kafelek ma jeden z nich, patrz src/data/sections.js) */
+  --c-green: #22573c;
+  --c-brown: #7c4719;
+  --c-bordo: #8d1f27;
+  --c-navy: #1d3a5c;
+  --c-teal: #1b5b56;
+
+  /* Kolory główne */
+  --color-primary: #1f4d36;        /* butelkowa zieleń - nagłówki, menu, stopka */
+  --color-primary-hover: #2b6548;
+  --color-secondary: #7c4719;      /* brąz - drugie linie tytułów, akcenty */
+  --color-secondary-hover: #643810;
+  --color-sun: #f2b14c;            /* słońce z pejzażu - oszczędnie */
+
+  /* Tekst */
+  --color-heading: #1f4d36;
+  --color-text: #2c3029;
+  --color-text-muted: #545a50;
+  --color-text-subtle: #676c61;
+  --color-link: #22573c;
+
+  /* Tła i obramowania */
+  --color-page: #f8f4ea;           /* kremowe tło strony */
+  --color-bg: #fffdf8;             /* kafelki, karty */
+  --color-bg-subtle: #efe8d8;
+  --color-bg-dark: #173d2b;        /* stopka - kolor lasu z pejzażu */
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #d5e2d8;
+  --color-text-on-dark-subtle: #a9c2b1;
+  --color-border: #e6dcc8;
+
+  /* Pasek i ramki z telefonami pomocowymi */
+  --color-help-bg: #fbf0d9;
+  --color-help-border: #ecd39c;
+
+  /* Kształty */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-card: 0 1px 2px rgba(31, 52, 38, 0.08), 0 6px 18px -8px rgba(31, 52, 38, 0.28);
+  --shadow-card-hover: 0 2px 4px rgba(31, 52, 38, 0.1), 0 16px 32px -14px rgba(31, 52, 38, 0.42);
+
+  /* Układ */
+  --content-width: 1440px;
+  --reading-width: 820px;
+  --section-space: clamp(2.5rem, 5vw, 4rem);
+
+  /* Czcionki (pliki dołączone do projektu przez @fontsource - bez łączenia z Google) */
+  --font-heading: 'Montserrat', system-ui, sans-serif;
+  --font-sans: 'Noto Sans', system-ui, sans-serif;
+  --font-script: 'Caveat', cursive;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Stopka zawsze na dole okna, nawet gdy strona ma mało treści */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-page);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-heading);
+  line-height: 1.2;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Wyraźna ramka przy poruszaniu się klawiaturą */
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* Wspólna szerokość treści */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+}
+
+/* --- Przyciski --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+/* Biały - na ciemnym tle */
+.btn-light {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+.btn-light:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.btn-outline {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* --- Nagłówek sekcji: rozstrzelony nadtytuł + tytuł --- */
+.eyebrow {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.section-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  text-transform: uppercase;
+}
+
+/* Odręczne hasło */
+.script {
+  font-family: var(--font-script);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--color-primary);
+}
+
+/* Link "Przejdź do treści": niewidoczny, dopóki nie dojdzie się do niego klawiszem Tab */
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Po przejściu do treści nie pokazujemy ramki wokół całego <main> */
+main:focus {
+  outline: none;
+}
+
+/* Tekst tylko dla czytników ekranu */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Biała karta z treścią z WordPressa */
+.content-card {
+  width: calc(100% - 2rem);
+  max-width: var(--reading-width);
+  margin: var(--section-space) auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.pending {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}

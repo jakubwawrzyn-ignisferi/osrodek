@@ -1,0 +1,117 @@
+.banner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(220px, 26vw, 300px);
+  padding: 2rem 1rem 2.5rem;
+  overflow: hidden;
+  isolation: isolate;
+  /* Tło zastępcze: niebo nad łąką */
+  background:
+    radial-gradient(ellipse at 20% 110%, rgba(34, 87, 60, 0.28), transparent 60%),
+    radial-gradient(ellipse at 85% 105%, rgba(34, 87, 60, 0.22), transparent 55%),
+    linear-gradient(to bottom, #dfeae4 0%, #eef1e2 55%, var(--color-page) 100%);
+}
+
+/* Zdjęcie z WP + rozjaśnienie przy dolnej krawędzi, żeby przejście w tło strony było płynne */
+.withImage {
+  background:
+    linear-gradient(to bottom, transparent 70%, var(--color-page) 100%),
+    var(--banner-image) center / cover no-repeat,
+    var(--color-bg-subtle);
+}
+
+/* Biała plama pod tytułem */
+.plate {
+  position: relative;
+  max-width: 760px;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4.5rem) 1.25rem;
+  text-align: center;
+}
+
+.plate::before {
+  content: '';
+  position: absolute;
+  inset: 0 -1.5rem;
+  z-index: -1;
+  background-color: rgba(253, 250, 242, 0.94);
+  filter: url(#brush-edge);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
+
+.title {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+.top {
+  display: block;
+  font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+  color: var(--color-primary);
+}
+
+.bottom {
+  display: block;
+  margin-top: 0.15em;
+  font-size: clamp(1.4rem, 3.6vw, 2.7rem);
+  color: var(--color-secondary);
+  overflow-wrap: anywhere;
+}
+
+/* Hasła pod tytułem, nad nimi krótka kreska */
+.words {
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
+  background: linear-gradient(var(--color-primary), var(--color-primary)) top center / 64px 2px no-repeat;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Odręczne hasło w prawym rogu */
+.note {
+  position: absolute;
+  top: 1.25rem;
+  right: clamp(1rem, 3vw, 3rem);
+  max-width: 9.5em;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-md);
+  background-color: rgba(253, 250, 242, 0.8);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  text-align: center;
+  transform: rotate(-8deg);
+}
+
+.heart {
+  display: block;
+  width: 26px;
+  margin: 0.2rem auto 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+/* Na węższych ekranach hasło w rogu nachodziłoby na tytuł */
+@media (max-width: 1100px) {
+  .note {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .plate {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .words {
+    letter-spacing: 0.12em;
+  }
+}

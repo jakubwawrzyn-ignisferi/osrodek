@@ -1,0 +1,82 @@
+---
+// src/pages/[slug].astro
+// Podstrony budowane z listy w src/data/sections.js:
+//  - sekcje z siatką kafelków (np. /grupy-zainteresowan),
+//  - podstrony pojedynczych kafelków (np. /grupa-cyrkowa) i obu szkół ze strony głównej.
+// Treść i zdjęcie każdej z nich pochodzą ze strony WordPressa o tym samym slugu
+// (treść strony + obrazek wyróżniający). Podstrona kafelka powstaje tylko wtedy, gdy taka
+// strona w WP istnieje - wystarczy ją utworzyć i przebudować serwis.
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/Banner/Banner.jsx';
+import TileGrid from '../components/TileGrid/TileGrid.jsx';
+import { sections, getTilePages, withImages } from '../data/sections.js';
+import { getAllPages } from '../lib/wordpress.js';
+
+export async function getStaticPaths() {
+  const sectionPaths = sections.map((section) => ({
+    params: { slug: section.slug },
+    props: { kind: 'section', section },
+  }));
+  const tilePaths = getTilePages(await getAllPages()).map((tile) => ({
+    params: { slug: tile.slug },
+    props: { kind: 'tile', tile },
+  }));
+  return [...sectionPaths, ...tilePaths];
+}
+
+const { kind, section, tile } = Astro.props;
+const pages = await getAllPages();
+const wpPage = pages.get(Astro.params.slug);
+
+const title = kind === 'section' ? `${section.titleTop} ${section.titleBottom}` : wpPage?.title || tile.label;
+const tiles = kind === 'section' ? withImages(section.tiles, pages) : [];
+---
+<Layout title={title} tagline={section?.tagline} image={wpPage?.image}>
+    {kind === 'section' ? (
+        <>
+            <Banner
+                titleTop={section.titleTop}
+                titleBottom={section.titleBottom}
+                words={section.words}
+                note={section.note}
+                image={wpPage?.image}
+            />
+            {wpPage?.contentHtml && (
+                <div class="container intro wp-content" set:html={wpPage.contentHtml} />
+            )}
+            <TileGrid tiles={tiles} label={title} maxColumns={section.columns} />
+        </>
+    ) : (
+        <>
+            <Banner titleTop={title} image={wpPage?.image} />
+            <article class="content-card">
+                <a href={tile.parent.href} class="back">&larr; {tile.parent.label}</a>
+                {wpPage?.contentHtml ? (
+                    <div class="wp-content" set:html={wpPage.contentHtml} />
+                ) : (
+                    <p class="pending">Treść tej strony jest w przygotowaniu.</p>
+                )}
+            </article>
+        </>
+    )}
+</Layout>
+
+<style>
+    .intro {
+        max-width: var(--reading-width);
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: var(--color-link);
+        text-decoration: none;
+    }
+
+    .back:hover {
+        text-decoration: underline;
+    }
+</style>

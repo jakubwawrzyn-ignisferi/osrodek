@@ -1,0 +1,155 @@
+.card {
+  position: relative; /* punkt odniesienia dla linku rozciągniętego na całą kartę */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 3px solid #fff;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Zdjęcie */
+.media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0;
+  background-color: var(--color-bg-subtle);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+/* Tło zastępcze, gdy wpis nie ma żadnego obrazu */
+.placeholder {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  background: linear-gradient(135deg, #ead9bd, #d4b98f);
+  color: #fff;
+}
+
+/* Pasek pod zdjęciem: kwadrat z ikoną, tekst, strzałka */
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  flex-grow: 1;
+  padding: 0 0.9rem 1rem 0.6rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  margin-top: -20px;
+  border: 3px solid #fff;
+  border-radius: var(--radius-sm);
+  background-color: var(--c-brown);
+  color: #fff;
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.35);
+}
+
+.text {
+  flex-grow: 1;
+  min-width: 0;
+  padding-top: 0.6rem;
+}
+
+.date {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.title {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.link {
+  color: #23261f;
+  text-decoration: none;
+}
+
+/* Link rozciągnięty na całą kartę */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.card:hover .link {
+  color: var(--color-primary);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* Zajawka skrócona do 3 linijek */
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.chevron {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  margin-top: 0.9rem;
+  border-radius: 50%;
+  background-color: var(--c-brown);
+  color: #fff;
+  transition: transform 0.2s;
+}
+
+.card:hover .chevron {
+  transform: translateX(3px);
+}
+
+/* Bez animacji dla osób, które wyłączyły je w systemie */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-within,
+  .card:hover .image,
+  .card:hover .chevron {
+    transform: none;
+  }
+}

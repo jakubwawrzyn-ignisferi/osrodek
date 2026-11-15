@@ -1,0 +1,190 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(253, 251, 245, 0.97);
+  box-shadow: 0 1px 0 var(--color-border), 0 6px 18px -14px rgba(31, 77, 54, 0.5);
+}
+
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0.65rem clamp(1rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+/* --- Logo z nazwą --- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 52px;
+  height: auto;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.brandTagline {
+  margin-top: 0.3rem;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* --- Menu: ikona nad napisem, pionowe kreski między pozycjami --- */
+.menu {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item + .item {
+  border-left: 1px solid var(--color-border);
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 7.5rem;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #23261f;
+  transition: color 0.2s;
+}
+
+.icon {
+  color: var(--color-primary);
+  transition: transform 0.2s;
+}
+
+.link:hover {
+  color: var(--color-secondary);
+}
+
+.link:hover .icon {
+  transform: translateY(-2px);
+}
+
+.active {
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* Przycisk menu - widoczny tylko na wąskich ekranach */
+.toggle {
+  display: none;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+  .link {
+    min-width: 0;
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .inner {
+    flex-wrap: wrap;
+  }
+
+  /* Logo zajmuje resztę wiersza, a przycisk menu zostaje obok niego */
+  .brand {
+    flex: 1 1 0;
+  }
+
+  .toggle {
+    display: grid;
+  }
+
+  .nav {
+    display: none;
+    width: 100%;
+  }
+
+  .navOpen {
+    display: block;
+  }
+
+  .menu {
+    flex-direction: column;
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  .item + .item {
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .link {
+    flex-direction: row;
+    gap: 0.9rem;
+    padding: 0.85rem 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  .brandTagline {
+    letter-spacing: 0.16em;
+  }
+}
+
+@media (max-width: 420px) {
+  .logo {
+    width: 40px;
+  }
+
+  .brandTagline {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:hover .icon {
+    transform: none;
+  }
+}

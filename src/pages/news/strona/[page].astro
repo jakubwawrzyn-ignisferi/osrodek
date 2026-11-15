@@ -1,0 +1,25 @@
+---
+// src/pages/news/strona/[page].astro - kolejne strony listy aktualności (od 2 wzwyż).
+import Layout from '../../../layouts/Layout.astro';
+import Banner from '../../../components/Banner/Banner.jsx';
+import NewsSection from '../../../components/NewsSection/NewsSection.jsx';
+import Pagination from '../../../components/Pagination/Pagination.jsx';
+import { getAllPosts } from '../../../lib/wordpress.js';
+import { paginatePosts } from '../../../lib/news.js';
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+  const { total } = paginatePosts(allPosts, 1);
+  return Array.from({ length: total - 1 }, (_, index) => {
+    const page = index + 2;
+    return { params: { page: String(page) }, props: { page, ...paginatePosts(allPosts, page) } };
+  });
+}
+
+const { page, posts, total } = Astro.props;
+---
+<Layout title={`Aktualności - strona ${page}`}>
+    <Banner titleTop="Aktualności" words={['Z życia ośrodka', `Strona ${page} z ${total}`]} />
+    <NewsSection posts={posts} />
+    <Pagination current={page} total={total} />
+</Layout>

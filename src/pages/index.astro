@@ -1,11 +1,24 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
+// Strona główna: dwie połowy z kafelkami (src/data/sections.js) i najnowsze aktualności.
+// Tło połówek to sam gradient (HomeSplit.module.css), zdjęcie kafelka = obrazek wyróżniający
+// strony WP o slugu kafelka.
 import Layout from '../layouts/Layout.astro';
+import HomeSplit from '../components/HomeSplit/HomeSplit.jsx';
+import NewsSection from '../components/NewsSection/NewsSection.jsx';
+import { home, withImages } from '../data/sections.js';
+import { getAllPages, getLatestPosts } from '../lib/wordpress.js';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const pages = await getAllPages();
+const halves = home.halves.map((half) => ({
+    ...half,
+    href: pages.has(half.slug) ? `/${half.slug}` : null,
+    tiles: withImages(half.tiles, pages),
+}));
+
+const latestPosts = await getLatestPosts(3);
 ---
-
-<Layout>
-	<Welcome />
+<Layout title="Salezjański Dom Młodzieżowy w Różanymstoku" tagline="Razem w stronę lepszych możliwości">
+    <HomeSplit halves={halves} slogan={home.slogan} />
+    <NewsSection posts={latestPosts} title="Z życia ośrodka" />
 </Layout>

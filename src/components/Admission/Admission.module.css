@@ -1,0 +1,122 @@
+.wrapper {
+  padding: var(--section-space) clamp(1rem, 3vw, 2rem) 0;
+}
+
+.box {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 2.5rem 4rem;
+  align-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary), #173d2b);
+  color: #fff;
+  isolation: isolate;
+}
+
+/* Wschodzące słońce w rogu */
+.circle {
+  position: absolute;
+  z-index: -1;
+  width: 300px;
+  aspect-ratio: 1;
+  right: -90px;
+  bottom: -170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 177, 76, 0.55), rgba(242, 177, 76, 0.15) 70%, transparent 71%);
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-sun);
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.text {
+  margin: 0 0 2rem;
+  font-size: 1.08rem;
+  color: var(--color-text-on-dark-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.outline {
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+}
+
+.outline:hover {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  gap: 1.1rem;
+  padding: 1.2rem 1.3rem;
+  border-radius: var(--radius-md);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-sun);
+  color: #173d2b;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.stepTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.3rem;
+  font-size: 1.08rem;
+  color: #fff;
+}
+
+.stepIcon {
+  color: var(--color-sun);
+}
+
+.stepText {
+  margin: 0;
+  font-size: 0.97rem;
+  line-height: 1.55;
+  color: var(--color-text-on-dark-muted);
+}

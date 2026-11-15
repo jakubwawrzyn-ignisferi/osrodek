@@ -1,0 +1,33 @@
+.section {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--section-space) clamp(1rem, 3vw, 2rem) 0;
+}
+
+/* Tytuł po lewej, przycisk "Wszystkie aktualności" po prawej */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.heading {
+  margin: 0;
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* Siatka kafelków (wygląd samego kafelka: NewsCard.module.css).
+   Kafelek ma najwyżej 420 px szerokości, żeby pojedynczy wpis nie rozciągał się na całą stronę. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 420px));
+  justify-content: center;
+  gap: 1.25rem;
+}
